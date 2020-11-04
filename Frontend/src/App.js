@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './components/header';
+import ForumTopicContainer from './components/ForumTopicContainer'
 import './App.css'; 
 
 export default class App extends Component {
@@ -16,7 +17,7 @@ export default class App extends Component {
     return (
       <div className="appContainer">
         <div><Header/></div>
-        
+        <ForumTopicContainer/>
       </div>
     )
   }
