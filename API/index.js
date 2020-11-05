@@ -3,7 +3,7 @@ const app = express()
 const port = 4000
 const db = require('./db');
 const cors = require('cors');
-const itemComponent = require('./components/items');
+//const itemComponent = require('./components/items');
 const bodyParser = require('body-parser');
 
 
