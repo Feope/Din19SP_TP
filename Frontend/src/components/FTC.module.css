@@ -1,0 +1,41 @@
+.ForumTopicContainer{
+    width: auto;
+    border: 1px black;
+    vertical-align: middle;
+    position: relative;
+    top: 50px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: auto;
+
+}
+
+.ForumTopic{
+    width: 250px;
+    height: 250px;
+    border: 1px black;
+    background-color: red;
+    vertical-align: middle;
+    position: relative;
+    margin: auto;
+    margin-bottom: 125px;
+    margin-top: 75px;
+}
+
+@media (min-width:1000px){
+    .ForumTopicContainer{
+        grid-template-columns: auto auto ;
+    }
+}
+
+@media (min-width:1500px){
+    .ForumTopicContainer{
+        grid-template-columns: auto auto auto ;
+    }
+}
+
+@media (min-width:2000px){
+    .ForumTopicContainer{
+        grid-template-columns: auto auto auto auto;
+    }
+}
