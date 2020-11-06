@@ -8,8 +8,33 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/items', (req, res) => {
+//getting all from picture_posts
+app.get('/picture_posts', (req, res) => {
   client.query('SELECT * FROM picture_posts').then(results => {
+    res.json(results.rows);
+    console.log(results);
+  })
+})
+
+//getting all from users
+app.get('/users', (req, res) => {
+  client.query('SELECT * FROM users').then(results => {
+    res.json(results.rows);
+    console.log(results);
+  })
+})
+
+//getting all from comments
+app.get('/comments', (req, res) => {
+  client.query('SELECT * FROM comments').then(results => {
+    res.json(results.rows);
+    console.log(results);
+  })
+})
+
+//getting all from topics
+app.get('/topics', (req, res) => {
+  client.query('SELECT * FROM topics').then(results => {
     res.json(results.rows);
     console.log(results);
   })
