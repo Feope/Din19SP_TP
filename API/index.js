@@ -1,33 +1,36 @@
 const express = require('express')
 const app = express()
-const port = 4000
-const db = require('./db');
-const cors = require('cors');
-//const itemComponent = require('./components/items');
-const bodyParser = require('body-parser');
+const port = 3000
+//const db = require('./db');
 
 
- 
-app.use(bodyParser.json());
-app.use(cors());
-//app.use("/items", itemComponent);
+const { Client } = require('pg');
+
+const client = new Client({
+    user: 'wmewcoqahomuca',
+    host: 'ec2-54-75-150-32.eu-west-1.compute.amazonaws.com',
+    database: 'd6e4e41kp2e467',
+    password: 'd82fe89addeca7db91e01a8931cf9a07a11b67f521ee50e799cb9e8526f28ac6',
+    port: 5432,
+    ssl: { rejectUnauthorized: false }
+
+});
+
+
+client.connect();
+
 
 app.get('/', (req, res) => {
- res.send( 'Hello World')
+  res.send('Hello World!')
 })
 
 app.get('/items', (req, res) => {
-  db.query('SELECT * FROM picture_posts').then(dbResults => {
-      res.json({items: dbResults})
+  client.query('SELECT * FROM picture_posts').then(results => {
+    res.json(results.rows);
+    console.log(results);
   })
-  .catch(() => {
-      res.sendStatus(500);
-  });
-});
- 
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
-
-module.exports = app;
