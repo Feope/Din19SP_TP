@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from './components/header';
 import ForumTopicContainer from './components/ForumTopicContainer'
 import './App.css'; 
+import User from './components/User'
 
 export default class App extends Component {
   constructor ()
@@ -17,7 +18,8 @@ export default class App extends Component {
     return (
       <div className="appContainer">
         <div><Header/></div>
-        <ForumTopicContainer/>
+        <div><ForumTopicContainer/></div>
+        <div><User/></div>
       </div>
     )
   }
