@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const client = require('./db');
+const cors = require('cors');
+
+app.use(cors());
 
 
 app.get('/', (req, res) => {

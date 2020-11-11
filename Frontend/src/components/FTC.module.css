@@ -14,7 +14,9 @@
     width: 250px;
     height: 250px;
     border: 1px black;
-    background-color: red;
+    background-image: url("nopicture.png");
+    background-repeat: no-repeat;
+    background-size: 250px 250px;
     vertical-align: middle;
     position: relative;
     margin: auto;
@@ -38,4 +40,16 @@
     .ForumTopicContainer{
         grid-template-columns: auto auto auto auto;
     }
+}
+
+.likeIcons {
+  width: 25px;
+  padding-right: 10px;
+}
+
+.likesCommentsContainer {
+  display: flex;
+  position: absolute; 
+        bottom: 0;
+        right:0; 
 }
