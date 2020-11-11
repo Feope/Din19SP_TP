@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from './header.module.css';
 
-export default function header() {
+export default function header(props) {
   return (
     <>
       <div className={styles.headerBox}>
         <div id={styles.headerLogo}>AwesomeTP</div>
-        <div className={styles.loginIndicator}>TO LOGIN OR <br/>SHOW LOGGED IN USER</div>
+        <div className={styles.loginIndicator} onClick={props.userChange}>TO LOGIN OR <br/>SHOW LOGGED IN USER</div>
       </div>
       <div className={styles.headerLinksContainer}>
         <div className={styles.headerLinks}>Different</div>        
