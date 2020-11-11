@@ -1,4 +1,4 @@
-.ForumTopicContainer{
+.pictureTopicContainer{
   width: auto;
   border: 1px black;
   vertical-align: middle;
@@ -10,11 +10,13 @@
 
 }
 
-.ForumTopic{
+.pictureTopic{
   width: 250px;
   height: 250px;
   border: 1px black;
-  background-color: red;
+  background-image: url("nopicture.png");
+  background-repeat: no-repeat;
+  background-size: 250px 250px;
   vertical-align: middle;
   position: relative;
   margin: auto;
@@ -23,19 +25,31 @@
 }
 
 @media (min-width:1000px){
-  .ForumTopicContainer{
+  .pictureTopicContainer{
       grid-template-columns: auto auto ;
   }
 }
 
 @media (min-width:1500px){
-  .ForumTopicContainer{
+  .pictureTopicContainer{
       grid-template-columns: auto auto auto ;
   }
 }
 
 @media (min-width:2000px){
-  .ForumTopicContainer{
+  .pictureTopicContainer{
       grid-template-columns: auto auto auto auto;
   }
+}
+
+.likeIcons {
+width: 25px;
+padding-right: 10px;
+}
+
+.likesCommentsContainer {
+display: flex;
+position: absolute; 
+      bottom: 0;
+      right:0; 
 }

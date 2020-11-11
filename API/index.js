@@ -2,6 +2,11 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const client = require('./db');
+const cors = require('cors');
+const bodyParser = require('body-parser')
+
+app.use(cors());
+app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
