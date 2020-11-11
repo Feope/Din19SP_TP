@@ -19,12 +19,12 @@ export default function YourUserPage() {
                 setting 4 <br/>
             </div>
             <div className={styles.YourMedals}>
-                <div className={styles.medals}>medal 1</div>
-                <div className={styles.medals}>medal 2</div>
-                <div className={styles.medals}>medal 3</div>
-                <div className={styles.medals}>medal 4</div>     
-                <div className={styles.medals}>medal 5</div>
-                <div className={styles.medals}>medal 6</div>    
+                <div ><img alt="medal" style={{background: "white"}} className={styles.medals} src="/medals/medal1.png"/></div>
+                <div className={styles.medals}></div>
+                <div className={styles.medals}></div>
+                <div className={styles.medals}></div>     
+                <div className={styles.medals}></div>
+                <div className={styles.medals}></div>    
             </div>
             <div className={styles.YourHistory}>
                 recent post <br/>

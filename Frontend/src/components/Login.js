@@ -7,11 +7,11 @@ export default function Login(){
             <div className={styles.LoginContainer}>
                 <h1>AwesomeTP</h1>
                 <div className={styles.UserName}>
-                    <label for="username">Username:</label>
+                    <label htmlFor="username">Username:</label>
                     <input name="username"type="text" id="UserName"></input>
                 </div>
                 <div className={styles.Password}>
-                    <label for="pasword">Password:</label>
+                    <label htmlFor="pasword">Password:</label>
                     <input name="password"type="text" id="PassWord"></input>
                 </div>
                 <button>Login</button>

@@ -6,7 +6,7 @@ export default function header(props) {
     <>
       <div className={styles.headerBox}>
         <div id={styles.headerLogo}>AwesomeTP</div>
-        <div className={styles.loginIndicator} onClick={props.userChange}>TO LOGIN OR <br/>SHOW LOGGED IN USER</div>
+        <div className={styles.loginIndicator} onClick={props.userChange}><img alt="userImage" className={styles.userImage} src="/user.png"></img></div>
       </div>
       <div className={styles.headerLinksContainer}>
         <div className={styles.headerLinks}>Different</div>        

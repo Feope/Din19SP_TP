@@ -33,3 +33,7 @@
   text-align: right;
   flex-grow: 3;
 }
+
+.userImage {
+  width: 50px;
+}
