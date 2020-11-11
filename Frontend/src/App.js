@@ -18,7 +18,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    axios.get(urlAddress + "items")
+    axios.get(urlAddress + "picture_posts")
     .then((response) => {
       this.setState({allPosts: response.data})
       console.log(response.data);
