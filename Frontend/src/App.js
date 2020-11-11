@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Header from './components/header';
-import ForumTopicContainer from './components/ForumTopicContainer'
-import Onetopic from './components/onetopic'
+import ForumTopicContainer from './components/ForumTopicContainer';
+import PictureTopicContainer from './components/PictureTopicContainer';
+import Onetopic from './components/onetopic';
 import './App.css';
 import axios from 'axios';
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
@@ -29,7 +30,8 @@ export default class App extends Component {
     return (
       <div className="appContainer">
         <div><Header/></div>
-        <ForumTopicContainer allPosts={this.state.allPosts}/>
+        <ForumTopicContainer/>
+        <PictureTopicContainer allPosts={this.state.allPosts}/>
         <Onetopic/>
       </div>
     )
