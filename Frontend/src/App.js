@@ -3,6 +3,7 @@ import Header from './components/header';
 import ForumTopicContainer from './components/ForumTopicContainer'
 import YourUserPage from './components/YourUserPage'
 import './App.css'; 
+import Login from './components/Login'
 
 export default class App extends Component {
   constructor ()
@@ -38,6 +39,7 @@ export default class App extends Component {
       <div className="appContainer">
         <Header  userChange={this.loginChange}/>
         { output }
+        <div><Login/></div>
       </div>
     )
   }
