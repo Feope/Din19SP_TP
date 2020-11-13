@@ -4,3 +4,13 @@
   margin-right: auto;
 }
 
+.modal{
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(0,0,0,0.4);
+  left: 0%;
+  box-sizing: content-box;
+}
+
