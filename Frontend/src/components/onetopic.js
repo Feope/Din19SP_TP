@@ -1,21 +1,23 @@
-import React from 'react'
+import React from 'react';
 import styles from './onetopic.module.css';
 
-export default function onetopic() {
+export default function onetopic(props) {
+
+
   return (
     <div>
       <div className={styles.titleContainer}>
         <img alt="back button" src="/back2.png" className={styles.backForward}/>
-        <div className={styles.title}>TITLE</div>
+        <div className={styles.title}>{props.postInfo.postname}</div>
         <img alt="forward button" src="/forward2.png" className={styles.backForward}/>
       </div>
       <div className={styles.oneTopicContainer}>
         <div  className={styles.ForumTopic}>
-          <img alt=" for the post" src="/pictures/fort.jpg" className={styles.picture}></img>
+          <img alt=" for the post" src={`/pictures/${props.postInfo.picturename}`} className={styles.picture}></img>
           <div className={styles.likesCommentsContainer}>
-            <div>1<img alt="likes" className={styles.likeIcons} src="/likes2.png"></img></div>
-            <div>2<img alt="dislikes" className={styles.likeIcons} src="/dislikes2.png"></img></div>
-            <div>3<img alt="comments" className={styles.likeIcons} src="/comment2.png"/></div> {/*should we add comment section to picture_posts or get the amount of comments from comments table?*/}
+            <div>{props.postInfo.likes}<img alt="likes" className={styles.likeIcons} src="/likes2.png"></img></div>
+            <div>{props.postInfo.dislikes}<img alt="dislikes" className={styles.likeIcons} src="/dislikes2.png"></img></div>
+            <div>?<img alt="comments" className={styles.likeIcons} src="/comment2.png"/></div> {/*should we add comment section to picture_posts or get the amount of comments from comments table?*/}
           </div>
         </div>
         <div className={styles.textArea}>

@@ -1,24 +1,18 @@
-import React from 'react'
+import React from 'react';
 import styles from './FTC.module.css';
+import {Link} from "react-router-dom";
 
-export default function ForumTopicContainer() {
+export default function ForumTopicContainer(props) {
+
     return (
-        <div className={styles.ForumTopicContainer}>
-            <div className={styles.ForumTopic}>
-                1
-            </div>
-            <div className={styles.ForumTopic}>
-                2
-            </div>
-            <div className={styles.ForumTopic}>
-                3
-            </div>
-            <div className={styles.ForumTopic}>
-                4
-            </div>
-            <div className={styles.ForumTopic}>
-                5
-            </div>
-        </div>
+      <div className={styles.ForumTopicContainer}>
+        {props.topics.map(topic => (
+          <div className={styles.ForumTopic} key={topic.topicid} style={{backgroundImage: `url(/topics/${topic.picture})`}}> 
+            <Link to={`/topics/${topic.topic}`} onClick={()=> props.topicChange(topic.topicid)}>
+              <div className={styles.pictureTitle}><span className={styles.noOpacity}>{topic.topic}</span></div> 
+            </Link>
+          </div> 
+        ))}
+      </div>
     )
 }
