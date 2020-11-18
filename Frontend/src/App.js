@@ -20,11 +20,6 @@ export default class App extends Component {
     super();
     this.state = 
     {
-<<<<<<< HEAD
-      userpage: false,
-      allPosts: [],
-      allTopics: []
-=======
       page: "",
       username: "",
       password: "",
@@ -33,7 +28,6 @@ export default class App extends Component {
       chosenTopicPosts: [],
       topics: [],
       postInfo: []
->>>>>>> 1c1d76febc8473d2c10be2d693656dbcef89a3af
     };
   }
 
@@ -42,13 +36,6 @@ export default class App extends Component {
     .then((response) => {
       this.setState({allPosts: response.data})
     });
-<<<<<<< HEAD
-    axios.get(urlAddress + 'topics')
-    .then((response) => {
-      this.setState({allTopics: response.data})
-    });
-    };
-=======
     axios.get(urlAddress + "topics")
     .then((response) => {
       this.setState({topics: response.data})
@@ -62,7 +49,6 @@ export default class App extends Component {
       this.setState({postInfo: response.data[0]});
     });
   };
->>>>>>> 1c1d76febc8473d2c10be2d693656dbcef89a3af
 
 
   loginChange = () => {
@@ -118,17 +104,11 @@ export default class App extends Component {
 
     let output = 
       <>
-<<<<<<< HEAD
-        <ForumTopicContainer allTopics={this.state.allTopics}/>
-        <PictureTopicContainer allPosts={this.state.allPosts}/>
-        <Onetopic/>
-=======
         <Router>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
           <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
           <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo}/>} />
         </Router>
->>>>>>> 1c1d76febc8473d2c10be2d693656dbcef89a3af
       </>
 
     let login =
@@ -161,7 +141,7 @@ export default class App extends Component {
     return (  
       <div className="appContainer">
         { login }
-        <Header  userChange={this.loginChange}/>
+        <Header topics={this.state.topics} userChange={this.loginChange}/>
         { output } 
       </div>
     )

@@ -12,13 +12,9 @@
 .ForumTopic{
   width: 250px;
   height: 250px;
-<<<<<<< HEAD
-  border: 1px solid black;
-=======
   border: 1px black;
   background-repeat: no-repeat;
   background-size: 250px 250px;
->>>>>>> 1c1d76febc8473d2c10be2d693656dbcef89a3af
   vertical-align: middle;
   position: relative;
   margin: auto;

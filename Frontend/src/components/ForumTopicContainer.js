@@ -4,18 +4,6 @@ import {Link} from "react-router-dom";
 
 export default function ForumTopicContainer(props) {
 
-<<<<<<< HEAD
-export default function ForumTopicContainer(props) {
-    return (
-        <div className={styles.ForumTopicContainer}>
-            {props.allTopics.map(items => (
-                <div key={items.topicid} className={styles.ForumTopic}>
-                    <div>{items.picture}</div>
-                    <div>{items.topic}</div>
-            </div>
-            ))}
-        </div>
-=======
     return (
       <div className={styles.ForumTopicContainer}>
         {props.topics.map(topic => (
@@ -26,6 +14,5 @@ export default function ForumTopicContainer(props) {
           </div> 
         ))}
       </div>
->>>>>>> 1c1d76febc8473d2c10be2d693656dbcef89a3af
     )
 }
