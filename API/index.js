@@ -37,9 +37,25 @@ app.get('/comments', (req, res) => {
   })
 })
 
+//getting all picture_posts from spesific topic
+app.get('/picture_posts/:topicid', (req, res) => {
+  client.query('SELECT * FROM picture_posts WHERE topicid = $1', [req.params.topicid]).then(results => {
+    res.json(results.rows);
+    console.log(results);
+  })
+})
+
 //getting all from topics
 app.get('/topics', (req, res) => {
   client.query('SELECT * FROM topics').then(results => {
+    res.json(results.rows);
+    console.log(results);
+  })
+})
+
+//getting spesific post
+app.get('/post/:postid', (req, res) => {
+  client.query('SELECT * FROM picture_posts WHERE id = $1', [req.params.postid]).then(results => {
     res.json(results.rows);
     console.log(results);
   })
