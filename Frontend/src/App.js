@@ -5,9 +5,11 @@ import PictureTopicContainer from './components/PictureTopicContainer';
 import Onetopic from './components/onetopic';
 import './App.css';
 import axios from 'axios';
-import YourUserPage from './components/YourUserPage' 
-import Login from './components/Login'
-import UserPage from './components/UserPage' 
+import UserPage from './components/UserPage'; 
+import YourUserPage from './components/YourUserPage' ;
+import Login from './components/Login';
+import { BrowserRouter as Router, Route} from "react-router-dom";
+
 
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
 const urlAddress = "http://localhost:4000/" //url address for api Local
@@ -22,7 +24,10 @@ export default class App extends Component {
       username: "",
       password: "",
       loggedIn: false,
-      allPosts: []
+      allPosts: [],
+      chosenTopicPosts: [],
+      topics: [],
+      postInfo: []
     };
   }
 
@@ -31,7 +36,19 @@ export default class App extends Component {
     .then((response) => {
       this.setState({allPosts: response.data})
     });
-    };
+    axios.get(urlAddress + "topics")
+    .then((response) => {
+      this.setState({topics: response.data})
+    });
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const postid = urlParams.get('post');
+  
+    axios.get("http://localhost:4000/post/"+ postid)
+    .then((response) => {
+      this.setState({postInfo: response.data[0]});
+    });
+  };
 
 
   loginChange = () => {
@@ -75,13 +92,23 @@ export default class App extends Component {
     this.setState({page: ""});
   }
 
+  topicChange = (newTopic) => {
+    axios.get(urlAddress + "picture_posts/" + newTopic)
+    .then((response) => {
+      this.setState({chosenTopicPosts: response.data})
+      console.log("somethin happened");
+    });
+  }
+
   render() {
 
     let output = 
       <>
-        <ForumTopicContainer/>
-        <PictureTopicContainer allPosts={this.state.allPosts}/>
-        <Onetopic/>
+        <Router>
+          <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
+          <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo}/>} />
+        </Router>
       </>
 
     let login =
