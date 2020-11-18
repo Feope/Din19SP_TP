@@ -13,8 +13,7 @@
 .ForumTopic{
   width: 250px;
   height: 250px;
-  border: 1px black;
-  background-color: red;
+  border: 1px solid black;
   vertical-align: middle;
   position: relative;
   margin: auto;

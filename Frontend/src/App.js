@@ -8,8 +8,8 @@ import axios from 'axios';
 import YourUserPage from './components/YourUserPage' 
 import Login from './components/Login'
 
-//const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
-const urlAddress = "http://localhost:4000/" //url address for api Local
+const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
+//const urlAddress = "http://localhost:4000/" //url address for api Local
 
 export default class App extends Component {
   constructor ()
@@ -18,7 +18,8 @@ export default class App extends Component {
     this.state = 
     {
       userpage: false,
-      allPosts: []
+      allPosts: [],
+      allTopics: []
     };
   }
 
@@ -26,6 +27,10 @@ export default class App extends Component {
     axios.get(urlAddress + "picture_posts")
     .then((response) => {
       this.setState({allPosts: response.data})
+    });
+    axios.get(urlAddress + 'topics')
+    .then((response) => {
+      this.setState({allTopics: response.data})
     });
     };
 
@@ -39,7 +44,7 @@ export default class App extends Component {
 
     let output = 
       <>
-        <ForumTopicContainer/>
+        <ForumTopicContainer allTopics={this.state.allTopics}/>
         <PictureTopicContainer allPosts={this.state.allPosts}/>
         <Onetopic/>
       </>
