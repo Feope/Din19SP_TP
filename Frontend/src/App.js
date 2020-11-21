@@ -24,10 +24,13 @@ export default class App extends Component {
       username: "",
       password: "",
       loggedIn: false,
+      login: 'Login',
       allPosts: [],
       chosenTopicPosts: [],
       topics: [],
-      postInfo: []
+      postInfo: [],
+      loggedID: "",
+      YourUserData: []
     };
   }
 
@@ -49,6 +52,15 @@ export default class App extends Component {
       this.setState({postInfo: response.data[0]});
     });
   };
+
+  getUserData = (UID) => {
+    const postid =UID;
+    axios.get("http://localhost:4000/userID/"+ postid)
+    .then((response) => {
+      this.setState({YourUserData: response.data[0]});
+      console.log(response.data[0]);
+    });
+  }
 
 
   loginChange = () => {
@@ -76,16 +88,54 @@ export default class App extends Component {
   }
 
   onLogin = () => {
-    if(this.state.username === "username" && this.state.password === "password"){
-      this.setState({ loggedIn: true });
-      this.setState({page: ""});
+    let username = this.state.username;
+    let password = this.state.password;
+    if(this.state.login === "Login"){
+      axios.post("http://localhost:4000/user", {
+        username,
+        password
+      })
+      .then((response) => {
+        if(response.data){
+          this.setState({loggedID: response.data});
+          this.setState({loggedIn: true });
+          this.setState({page: "" });
+          this.getUserData(response.data);
+        }
+        else{
+          this.setState({ loggedIn: false });
+          alert("Username or Password incorrect");
+        }        
+      });
+
+    }
+    else if(this.state.login === "Register"){
+      this.addUser(this.state.username, this.state.password);
+    }
+    console.log( this.state.loggedIn );
+  }
+
+  changeToRegister = () =>{
+    if(this.state.login === "Login"){
+      this.setState({ login: 'Register' });
     }
     else{
-      this.setState({ loggedIn: false });
-      alert("Username or Password incorrect");
+      this.setState({ login: 'Login' });
     }
+  }
 
-    console.log( this.state.loggedIn );
+  addUser = (username, password) => {
+    axios.post('http://localhost:4000/register', {
+      username,
+      password
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      alert('Username and password require at least 3 characters each');
+      console.log(error);
+    });
   }
 
   closeModal = () =>{
@@ -119,7 +169,7 @@ export default class App extends Component {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage/>
+        <YourUserPage UserData={this.state.YourUserData}/>
       </>
     }
     else if(this.state.page === "userpage"){
@@ -132,7 +182,7 @@ export default class App extends Component {
     if(this.state.page === "login"){
       login =
         <div className="modal" >
-          <Login closeModal={this.closeModal} onLogin={this.onLogin} updatePassword={this.updatePassword} updateUsername={this.updateUsername} username={this.state.username} password={this.state.password}/>
+          <Login changeToRegister={this.changeToRegister} login={this.state.login} closeModal={this.closeModal} onLogin={this.onLogin} updatePassword={this.updatePassword} updateUsername={this.updateUsername} username={this.state.username} password={this.state.password}/>
         </div>
     }
 
