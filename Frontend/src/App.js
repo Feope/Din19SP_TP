@@ -27,7 +27,8 @@ export default class App extends Component {
       allPosts: [],
       chosenTopicPosts: [],
       topics: [],
-      postInfo: []
+      postInfo: [],
+      comments: [],
     };
   }
 
@@ -44,9 +45,13 @@ export default class App extends Component {
     const urlParams = new URLSearchParams(queryString);
     const postid = urlParams.get('post');
   
-    axios.get("http://localhost:4000/post/"+ postid)
+    axios.get("https://awesome-tp.herokuapp.com/post/"+ postid)
     .then((response) => {
       this.setState({postInfo: response.data[0]});
+    });
+    axios.get("https://awesome-tp.herokuapp.com/comments/" + postid)
+    .then((response) => {
+      this.setState({comments: response.data[0]});
     });
   };
 
@@ -107,7 +112,7 @@ export default class App extends Component {
         <Router>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
           <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo}/>} />
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} comments={this.state.comments}/>} />
         </Router>
       </>
 

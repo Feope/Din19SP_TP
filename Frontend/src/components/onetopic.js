@@ -24,13 +24,10 @@ export default function onetopic(props) {
           Here are some things that the owner has written of the thingy
         </div>
       </div>
+        
       <div className={styles.commentsTitle}>COMMENTS</div>
       <ul>
-        <li>here</li>
-        <li>some</li>
-        <li>comments?</li>
-        <li>what about date and the person who has written the comment?</li>
-        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis mollis ante. Vestibulum at massa a lacus sodales ultrices. Integer tempor, tortor at hendrerit laoreet, ex ante placerat turpis, sit amet tempus felis ligula eget nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed porta vehicula lorem, non pellentesque ligula finibus a. Proin tempus arcu ligula, molestie volutpat turpis auctor id. Integer sed purus at libero placerat auctor. Sed fermentum augue quis odio iaculis, et porta justo sagittis. Cras aliquam dolor tortor, sed efficitur libero eleifend quis. Donec consectetur tempus dolor, et scelerisque magna placerat eget. Ut vitae finibus arcu, non pellentesque nisi. Suspendisse sit amet egestas tellus. Vivamus leo lectus, placerat dignissim purus et, dictum venenatis ante.</li>
+        <li key={props.comments.id}>{props.comments.textcomment}</li>
       </ul>
       <form className={styles.commentForm}>
         <label htmlFor="comment">Write new comment:</label><br/>
