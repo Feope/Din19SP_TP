@@ -141,7 +141,7 @@ export default class App extends Component {
     return (  
       <div className="appContainer">
         { login }
-        <Header topics={this.state.topics} userChange={this.loginChange}/>
+        <Header topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
         { output } 
       </div>
     )
