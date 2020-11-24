@@ -63,3 +63,10 @@ h1{
     margin-right: auto;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+.Register{
+    text-decoration: underline;
+    color: blue;
+    font-size: 8;
+    cursor: pointer;
+}

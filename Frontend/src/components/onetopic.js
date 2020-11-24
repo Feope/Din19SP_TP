@@ -26,9 +26,13 @@ export default function onetopic(props) {
       </div>
         
       <div className={styles.commentsTitle}>COMMENTS</div>
-      <ul>
-        <li key={props.comments.id}>{props.comments.textcomment}</li>
-      </ul>
+        <div> 
+          {props.comments.map( comment => (
+            <div key={comment.id}>
+            <div> {comment.textcomment} </div> 
+            </div>
+          ))}
+        </div>
       <form className={styles.commentForm}>
         <label htmlFor="comment">Write new comment:</label><br/>
         <input type="text" name="comment"/> <br/>
