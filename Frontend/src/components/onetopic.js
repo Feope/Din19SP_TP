@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './onetopic.module.css';
 
-export default function onetopic(props) {
+export default function Onetopic(props) {
+
+  const [newComment, setnewComment] = useState("");
+
+  const addNewComment = () => {
+    props.addNewComment(newComment);
+  }
 
 
   return (
@@ -33,11 +39,11 @@ export default function onetopic(props) {
             </div>
           ))}
         </div>
-      <form className={styles.commentForm}>
-        <label htmlFor="comment">Write new comment:</label><br/>
-        <input type="text" name="comment"/> <br/>
-        <input type="submit" value="Submit"/>
-      </form>
+        <form className={styles.commentForm}>
+          <label htmlFor="comment">Write new comment:</label><br/>
+          <input type="text" name="comment" onChange={ (event) => setnewComment(event.target.value) }/> <br/>
+          <input type="submit" value="Submit" onClick={addNewComment}/>
+        </form>
     </div>
   )
 }

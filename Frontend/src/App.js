@@ -10,7 +10,6 @@ import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
-
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
 const urlAddress = "http://localhost:4001/" //url address for api Local
 
@@ -58,9 +57,22 @@ export default class App extends Component {
     });
   };
 
+  addNewComment = (textcomment, userid, UID) => {
+    var today = new Date();
+    var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate();
+    var time = today.getHours() + ':'+ today.getMinutes() +':'+ today.getSeconds();
+    var timedate = date+' '+time;
+
+    const postid = UID;
+    axios.post("http://localhost:4001/comments" + postid, {textcomment, timedate, userid, postid})
+    .then((response) => {
+      this.setState({ comments: response.data.json});
+    })
+  }
+
   getUserData = (UID) => {
     const postid =UID;
-    axios.get("http://localhost:4000/userID/"+ postid)
+    axios.get("http://localhost:4001/userID/"+ postid)
     .then((response) => {
       this.setState({YourUserData: response.data[0]});
       console.log(response.data[0]);
@@ -96,7 +108,7 @@ export default class App extends Component {
     let username = this.state.username;
     let password = this.state.password;
     if(this.state.login === "Login"){
-      axios.post("http://localhost:4000/user", {
+      axios.post("http://localhost:4001/user", {
         username,
         password
       })
@@ -130,7 +142,7 @@ export default class App extends Component {
   }
 
   addUser = (username, password) => {
-    axios.post('http://localhost:4000/register', {
+    axios.post('http://localhost:4001/register', {
       username,
       password
     })
@@ -162,7 +174,7 @@ export default class App extends Component {
         <Router>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
           <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} comments={this.state.comments}/>} />
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} comments={this.state.comments} addNewComment={ this.addComment }/>} />
         </Router>
       </>
 
