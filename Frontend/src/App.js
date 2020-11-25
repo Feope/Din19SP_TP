@@ -12,12 +12,12 @@ import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
-const urlAddress = "http://localhost:4000/" //url address for api Local
+const urlAddress = "http://localhost:4001/" //url address for api Local
 
 export default class App extends Component {
-  constructor ()
+  constructor (props)
   {
-    super();
+    super(props);
     this.state = 
     {
       page: "",
@@ -29,6 +29,7 @@ export default class App extends Component {
       chosenTopicPosts: [],
       topics: [],
       postInfo: [],
+      comments: [],
       postIds: [],
       loggedID: "",
       YourUserData: [],
@@ -51,6 +52,10 @@ export default class App extends Component {
     axios.get(urlAddress + "post/" + postid)
     .then((response) => {
       this.setState({postInfo: response.data[0]});
+    });
+    axios.get( urlAddress + "comments/" + postid)
+    .then((response) => {
+      this.setState({comments: response.data});
     });
     axios.get(urlAddress + "postids")
     .then((response) => {
@@ -162,7 +167,7 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
           <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds}/>} />
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments}/>} />
         </Switch>
       </>
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 4001
 const client = require('./db');
 const cors = require('cors');
 const bodyParser = require('body-parser')
@@ -12,6 +12,8 @@ const saltRounds = 10;
 app.use(cors());
 app.use(bodyParser.json());
 console.log("hello");
+
+console.log('hello wolld')
 
 let user = [
   {
@@ -65,7 +67,6 @@ app.get('/comments', (req, res) => {
 app.get('/comments/:postid', (req, res) => {
   client.query('SELECT * FROM comments WHERE postsid = $1', [req.params.postid]).then(results => {
     res.json(results.rows);
-    console.log(results);
   })
 })
 
