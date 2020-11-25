@@ -1,10 +1,10 @@
 import React from 'react'
 import styles from './header.module.css';
-import { BrowserRouter as Router, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function header(props) {
   return (
-    <Router>
+    <>
       <div className={styles.headerBox}>
         <div id={styles.headerLogo}><a href="/">AwesomeTP</a></div>
         <div className={styles.loginIndicator} onClick={props.userChange}><img alt="userImage" className={styles.userImage} src="/user.png"></img></div>
@@ -16,6 +16,6 @@ export default function header(props) {
           </Link>
         ))}
       </div>
-    </Router>
+    </>
   )
 }

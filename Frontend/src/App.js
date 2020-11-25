@@ -8,7 +8,7 @@ import axios from 'axios';
 import UserPage from './components/UserPage'; 
 import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
 const urlAddress = "http://localhost:4001/" //url address for api Local
@@ -29,8 +29,9 @@ export default class App extends Component {
       topics: [],
       postInfo: [],
       comments: [],
+      postIds: [],
       loggedID: "",
-      YourUserData: []
+      YourUserData: [],
     };
   }
 
@@ -55,6 +56,10 @@ export default class App extends Component {
     .then((response) => {
       this.setState({comments: response.data});
     });
+    axios.get(urlAddress + "postids")
+    .then((response) => {
+      this.setState({postIds: response.data})
+    });
   };
 
   addNewComment = (textcomment, userid, UID) => {
@@ -72,7 +77,7 @@ export default class App extends Component {
 
   getUserData = (UID) => {
     const postid =UID;
-    axios.get("http://localhost:4001/userID/"+ postid)
+    axios.get(urlAddress + "userID/" + postid)
     .then((response) => {
       this.setState({YourUserData: response.data[0]});
       console.log(response.data[0]);
@@ -108,7 +113,7 @@ export default class App extends Component {
     let username = this.state.username;
     let password = this.state.password;
     if(this.state.login === "Login"){
-      axios.post("http://localhost:4001/user", {
+      axios.post(urlAddress + "user", {
         username,
         password
       })
@@ -142,7 +147,7 @@ export default class App extends Component {
   }
 
   addUser = (username, password) => {
-    axios.post('http://localhost:4001/register', {
+    axios.post(urlAddress + 'register', {
       username,
       password
     })
@@ -171,11 +176,11 @@ export default class App extends Component {
 
     let output = 
       <>
-        <Router>
+        <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
           <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} comments={this.state.comments} addNewComment={ this.addComment }/>} />
-        </Router>
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments} addNewComment={this.state.addNewComment}/>} />
+        </Switch>
       </>
 
     let login =
@@ -207,9 +212,11 @@ export default class App extends Component {
 
     return (  
       <div className="appContainer">
-        { login }
-        <Header topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
-        { output } 
+        <Router>
+          { login }
+          <Header topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
+          { output } 
+        </Router>
       </div>
     )
   }

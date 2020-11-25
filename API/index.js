@@ -11,6 +11,7 @@ const saltRounds = 10;
 
 app.use(cors());
 app.use(bodyParser.json());
+console.log("hello");
 
 console.log('hello wolld')
 
@@ -30,6 +31,18 @@ app.get('/', (req, res) => {
 app.get('/picture_posts', (req, res) => {
   client.query('SELECT * FROM picture_posts').then(results => {
     res.json(results.rows);
+    console.log(results);
+  })
+})
+
+//getting ids from picture_posts
+app.get('/postids', (req, res) => {
+  client.query('SELECT id FROM picture_posts').then(results => {
+    const idsArray = [];
+    for(i=0; i<results.rows.length; i++) {
+      idsArray.push(results.rows[i].id);
+    }
+    res.json(idsArray);
     console.log(results);
   })
 })

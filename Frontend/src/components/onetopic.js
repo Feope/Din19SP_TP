@@ -9,13 +9,37 @@ export default function Onetopic(props) {
     props.addNewComment(newComment);
   }
 
+  
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const postid = urlParams.get('post');
+    console.log(postid);
+    var forwardPostid = "";
+    var backwardPostid = "";
+    const currentIndex = props.postIds.indexOf(postid);
+    if (currentIndex === props.postIds.length-1) {
+      forwardPostid = props.postIds[0]; 
+    }
+    else {
+      forwardPostid = props.postIds[currentIndex+1]; 
+    }
+    if (currentIndex === 0) {
+      backwardPostid = props.postIds[props.postIds.length-1];
+    }
+    else {
+      backwardPostid = props.postIds[currentIndex-1];
+    }
 
   return (
     <div>
       <div className={styles.titleContainer}>
-        <img alt="back button" src="/back2.png" className={styles.backForward}/>
+        <a href={`/post?post=${backwardPostid}`}>
+          <img alt="back button" src="/back2.png" className={styles.backForward}/>
+        </a>
         <div className={styles.title}>{props.postInfo.postname}</div>
-        <img alt="forward button" src="/forward2.png" className={styles.backForward}/>
+        <a href={`/post?post=${forwardPostid}`}>
+          <img alt="forward button" src="/forward2.png" className={styles.backForward}/>
+        </a>
       </div>
       <div className={styles.oneTopicContainer}>
         <div  className={styles.ForumTopic}>
@@ -27,7 +51,7 @@ export default function Onetopic(props) {
           </div>
         </div>
         <div className={styles.textArea}>
-          Here are some things that the owner has written of the thingy
+          {props.postInfo.bio}
         </div>
       </div>
         
