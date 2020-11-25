@@ -15,7 +15,8 @@ export default function Login(props){
                     <label htmlFor="pasword">Password:</label>
                     <input onChange={props.updatePassword} value={props.password} name="password"type="password" id="PassWord"></input>
                 </div>
-                <button onClick={props.onLogin}>Login</button>
+                <button onClick={props.onLogin}>{props.login}</button>
+                <div onClick={props.changeToRegister} className={styles.Register}>Or click here to register</div>
             </div>
         </>
     )
