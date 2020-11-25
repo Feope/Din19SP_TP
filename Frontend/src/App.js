@@ -65,7 +65,7 @@ export default class App extends Component {
 
   getUserData = (UID) => {
     const postid =UID;
-    axios.get("http://localhost:4000/userID/"+ postid)
+    axios.get(urlAddress + "userID/" + postid)
     .then((response) => {
       this.setState({YourUserData: response.data[0]});
       console.log(response.data[0]);
@@ -101,7 +101,7 @@ export default class App extends Component {
     let username = this.state.username;
     let password = this.state.password;
     if(this.state.login === "Login"){
-      axios.post("http://localhost:4000/user", {
+      axios.post(urlAddress + "user", {
         username,
         password
       })
@@ -135,7 +135,7 @@ export default class App extends Component {
   }
 
   addUser = (username, password) => {
-    axios.post('http://localhost:4000/register', {
+    axios.post(urlAddress + 'register', {
       username,
       password
     })

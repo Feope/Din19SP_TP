@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './onetopic.module.css';
 
-export default function onetopic(props) {
+export default function Onetopic(props) {
   
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
