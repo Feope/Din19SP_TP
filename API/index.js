@@ -11,6 +11,7 @@ const saltRounds = 10;
 
 app.use(cors());
 app.use(bodyParser.json());
+console.log("hello");
 
 let user = [
   {
@@ -32,6 +33,18 @@ app.get('/picture_posts', (req, res) => {
   })
 })
 
+//getting ids from picture_posts
+app.get('/postids', (req, res) => {
+  client.query('SELECT id FROM picture_posts').then(results => {
+    const idsArray = [];
+    for(i=0; i<results.rows.length; i++) {
+      idsArray.push(results.rows[i].id);
+    }
+    res.json(idsArray);
+    console.log(results);
+  })
+})
+
 //getting all from users
 app.get('/users', (req, res) => {
   client.query('SELECT * FROM users').then(results => {
@@ -43,6 +56,14 @@ app.get('/users', (req, res) => {
 //getting all from comments
 app.get('/comments', (req, res) => {
   client.query('SELECT * FROM comments').then(results => {
+    res.json(results.rows);
+    console.log(results);
+  })
+})
+
+//getting all comments from spesific topic
+app.get('/comments/:postid', (req, res) => {
+  client.query('SELECT * FROM comments WHERE postsid = $1', [req.params.postid]).then(results => {
     res.json(results.rows);
     console.log(results);
   })
