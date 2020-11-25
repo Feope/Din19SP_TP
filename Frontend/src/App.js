@@ -65,7 +65,7 @@ export default class App extends Component {
 
   getUserData = (UID) => {
     const postid =UID;
-    axios.get(urlAddress + "userID/" + postid)
+    axios.get(urlAddress+ "userID/"+ postid)
     .then((response) => {
       this.setState({YourUserData: response.data[0]});
       console.log(response.data[0]);
@@ -122,6 +122,7 @@ export default class App extends Component {
     else if(this.state.login === "Register"){
       this.addUser(this.state.username, this.state.password);
     }
+    
     console.log( this.state.loggedIn );
   }
 
@@ -135,17 +136,23 @@ export default class App extends Component {
   }
 
   addUser = (username, password) => {
+    if(username < 3 || password < 3){
+      alert('Username and password need at least 3 characters each!');
+    }
+    else{
     axios.post(urlAddress + 'register', {
       username,
       password
     })
-    .then(function (response) {
+    .then((response) => {
+      alert('Success');
       console.log(response);
     })
-    .catch(function (error) {
-      alert('Username and password require at least 3 characters each');
+    .catch((error) => {
+      alert('Username already taken');
       console.log(error);
     });
+    }
   }
 
   closeModal = () =>{
