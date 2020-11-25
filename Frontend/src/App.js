@@ -8,7 +8,7 @@ import axios from 'axios';
 import UserPage from './components/UserPage'; 
 import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
@@ -30,8 +30,9 @@ export default class App extends Component {
       topics: [],
       postInfo: [],
       comments: [],
+      postIds: [],
       loggedID: "",
-      YourUserData: []
+      YourUserData: [],
     };
   }
 
@@ -55,6 +56,10 @@ export default class App extends Component {
     axios.get( urlAddress + "comments/" + postid)
     .then((response) => {
       this.setState({comments: response.data});
+    });
+    axios.get(urlAddress + "postids")
+    .then((response) => {
+      this.setState({postIds: response.data})
     });
   };
 
@@ -159,11 +164,11 @@ export default class App extends Component {
 
     let output = 
       <>
-        <Router>
+        <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
           <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} comments={this.state.comments}/>} />
-        </Router>
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments}/>} />
+        </Switch>
       </>
 
     let login =
@@ -195,9 +200,11 @@ export default class App extends Component {
 
     return (  
       <div className="appContainer">
-        { login }
-        <Header topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
-        { output } 
+        <Router>
+          { login }
+          <Header topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
+          { output } 
+        </Router>
       </div>
     )
   }
