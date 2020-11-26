@@ -165,10 +165,26 @@ app.post('/register', (req, res) => {
      }
     }
     });
-  
-
 })
 
+
+//posting a comment
+app.post('/comment', (req, res) => {
+  let date = new Date();
+  let fullDate = "";
+  let fixedMonth = parseInt(date.getMonth());
+  fixedMonth = fixedMonth + 1;
+
+  fullDate = date.getDate() + "/" + fixedMonth + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+
+  client.query('INSERT INTO comments(id, postsid, userid, textcomment, timedate) VALUES ($1, $2, $3, $4, $5)', 
+                                    [uuidv4(), req.body.postsid, req.body.userid, req.body.textcomment, fullDate])
+  .then(results => {
+    res.sendStatus(201);
+    console.log("comment made!");
+  })
+  .catch(error => res.sendStatus(500));
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
