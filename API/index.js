@@ -79,8 +79,8 @@ app.post('comments/:postid', (req, res) => {
   var dateTime = date+' '+time;
 
   let textComment = req.body.textComment;
-  let postsid = postid;
-  let usersid = userid;
+  let postsid = req.body.postid;
+  let usersid = req.body.userid;
 
   let query = 'INSERT INTO public.comments(id, postsid, userid, textcomment, timedate)VALUES ($1, $2, $3, $4, $5)';
   let values = [uuidv4(), postsid, usersid, textComment, dateTime];

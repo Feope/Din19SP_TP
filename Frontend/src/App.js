@@ -62,10 +62,12 @@ export default class App extends Component {
     });
   };
 
-  addNewComment = (textcomment, userid, UID) => {
+  addNewComment = (UID, NewComment) => {
 
-    const postid = UID;
-    axios.post(urlAddress + "comments/" + postid, {textcomment, timedate, userid, postid})
+    let textcomment = NewComment
+    let postid = UID;
+    let userid = this.state.loggedID 
+    axios.post(urlAddress + "comments/" + postid, {textcomment, userid, postid})
     .then((response) => {
       console.log(response)
     })
