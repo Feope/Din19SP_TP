@@ -2,6 +2,13 @@ import React from 'react';
 import styles from './onetopic.module.css';
 
 export default function onetopic(props) {
+
+  function comment(event) {
+    event.preventDefault();
+    props.addComment(
+      event.target['comment'].value
+    );
+  }
   
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -56,7 +63,7 @@ export default function onetopic(props) {
             </div>
           ))}
         </div>
-      <form className={styles.commentForm}>
+      <form className={styles.commentForm} onSubmit={comment}>
         <label htmlFor="comment">Write new comment:</label><br/>
         <input type="text" name="comment"/> <br/>
         <input type="submit" value="Submit"/>

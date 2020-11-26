@@ -33,6 +33,7 @@ export default class App extends Component {
       postIds: [],
       loggedID: "",
       YourUserData: [],
+      test: false
     };
   }
 
@@ -166,6 +167,32 @@ export default class App extends Component {
       console.log("somethin happened");
     });
   }
+  
+  addComment = (comment) => {
+    if (comment.length === 0) {
+      alert("The comment box was empty, please write even something!")
+    }
+    else {
+      let userID = 1
+      if (this.state.loggedID !== "") {
+        userID = this.state.loggedID
+      }
+
+      axios.post(urlAddress + 'comment',
+        {
+          postsid: this.state.postInfo.id, 
+          userid: userID,
+          textcomment: comment
+        })
+      .then((response => {
+        console.log("new comment created");
+        this.componentDidMount();
+      }))
+      .catch(error => {
+      alert("hmm, something wrong???");
+      })
+    }
+  };
 
   render() {
 
@@ -174,7 +201,7 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
           <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments}/>} />
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments} addComment={this.addComment}/>} />
         </Switch>
       </>
 
