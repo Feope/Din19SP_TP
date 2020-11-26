@@ -10,7 +10,6 @@ import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
-
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
 const urlAddress = "http://localhost:4001/" //url address for api Local
 
@@ -167,6 +166,22 @@ export default class App extends Component {
     });
   }
 
+  addComment = (comment) => {
+
+    let userID = 1 
+    if (this.state.loggedID !== "") {
+      userID = this.state.loggedID
+    }
+    axios.post(urlAddress + 'comment', {postsid: this.state.postInfo.id, userid: userID, textcomment: comment})
+    .then((response => {
+      console.log("new comment created");
+      window.location.reload(true)
+    }))
+    .catch(error => {
+      alert("hmm, something wrong???");
+    })
+  };
+
   render() {
 
     let output = 
@@ -174,7 +189,7 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
           <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments}/>} />
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments} addComment={this.addComment}/>} />
         </Switch>
       </>
 
