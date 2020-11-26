@@ -63,15 +63,11 @@ export default class App extends Component {
   };
 
   addNewComment = (textcomment, userid, UID) => {
-    var today = new Date();
-    var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate();
-    var time = today.getHours() + ':'+ today.getMinutes() +':'+ today.getSeconds();
-    var timedate = date+' '+time;
 
     const postid = UID;
-    axios.post("http://localhost:4001/comments" + postid, {textcomment, timedate, userid, postid})
+    axios.post(urlAddress + "comments/" + postid, {textcomment, timedate, userid, postid})
     .then((response) => {
-      this.setState({ comments: response.data.json});
+      console.log(response)
     })
   }
 

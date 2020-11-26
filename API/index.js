@@ -71,19 +71,24 @@ app.get('/comments/:postid', (req, res) => {
 })
 
 //putting comment to database
-
-/*app.post('comments/:postid', (req, res) => {
+app.post('comments/:postid', (req, res) => {
+  
+  var today = new Date();
+  var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate();
+  var time = today.getHours() + ':'+ today.getMinutes() +':'+ today.getSeconds();
+  var dateTime = date+' '+time;
 
   let textComment = req.body.textComment;
   let postsid = postid;
+  let usersid = userid;
 
   let query = 'INSERT INTO public.comments(id, postsid, userid, textcomment, timedate)VALUES ($1, $2, $3, $4, $5)';
-  let values = [textComment, dateTime, postsid];
+  let values = [uuidv4(), postsid, usersid, textComment, dateTime];
   client.query(query, values, (error, results) => {
     res.status(201).send('Row added')
   })
 })
-*/
+
 //getting all picture_posts from spesific topic
 app.get('/picture_posts/:topicid', (req, res) => {
   client.query('SELECT * FROM picture_posts WHERE topicid = $1', [req.params.topicid]).then(results => {
