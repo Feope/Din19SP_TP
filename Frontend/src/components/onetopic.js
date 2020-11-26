@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './onetopic.module.css';
 
 export default function Onetopic(props) {
 
-  const [newComment, setnewComment] = useState("");
-
-  const addNewComment = () => {
-    props.addNewComment(newComment);
-  }
+ function comment(event) {
+   event.preventDefault();
+   props.addComment(
+     event.target['comment'].value
+   )
+ }
 
   
     const queryString = window.location.search;
@@ -63,10 +64,10 @@ export default function Onetopic(props) {
             </div>
           ))}
         </div>
-        <form className={styles.commentForm}>
+        <form className={styles.commentForm} onSubmit={comment}>
           <label htmlFor="comment">Write new comment:</label><br/>
-          <input type="text" name="comment" onChange={ (event) => setnewComment(event.target.value) }/> <br/>
-          <input type="submit" value="Submit" onClick={addNewComment}/>
+          <input type="text" name="comment"/> <br/>
+          <input type="submit" value="Submit"/>
         </form>
     </div>
   )
