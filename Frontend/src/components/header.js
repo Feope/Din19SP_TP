@@ -6,7 +6,7 @@ export default function header(props) {
   return (
     <>
       <div className={styles.headerBox}>
-        <div id={styles.headerLogo}><a href="/">AwesomeTP</a></div>
+        <div id={styles.headerLogo}><Link to="/">AwesomeTP</Link></div>
         <div className={styles.loginIndicator} onClick={props.userChange}><img alt="userImage" className={styles.userImage} src="/user.png"></img></div>
       </div>
       <div className={styles.headerLinksContainer}>
