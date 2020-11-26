@@ -33,7 +33,8 @@ export default class App extends Component {
       postIds: [],
       loggedID: "",
       YourUserData: [],
-      test: false
+      test: false,
+      chosenTopicName: ""
     };
   }
 
@@ -63,6 +64,7 @@ export default class App extends Component {
       this.setState({postIds: response.data})
     });
   };
+
 
   getUserData = (UID) => {
     const postid =UID;
@@ -160,10 +162,10 @@ export default class App extends Component {
     this.setState({page: ""});
   }
 
-  topicChange = (newTopic) => {
+  topicChange = (newTopic, topicName) => {
     axios.get(urlAddress + "picture_posts/" + newTopic)
     .then((response) => {
-      this.setState({chosenTopicPosts: response.data})
+      this.setState({chosenTopicPosts: response.data, chosenTopicName:topicName})
       console.log("somethin happened");
     });
   }
@@ -177,7 +179,6 @@ export default class App extends Component {
       if (this.state.loggedID !== "") {
         userID = this.state.loggedID
       }
-
       axios.post(urlAddress + 'comment',
         {
           postsid: this.state.postInfo.id, 
@@ -194,14 +195,52 @@ export default class App extends Component {
     }
   };
 
+  thumbUp = () => {
+    axios.put(urlAddress + "like", 
+      {
+        likes: this.state.postInfo.likes+1,
+        dislikes: this.state.postInfo.dislikes, 
+        postid: this.state.postInfo.id
+      })
+    .then((response) => {
+      console.log("likes updated");
+      this.componentDidMount();
+  })
+  .catch(error => {
+    console.log("unable to update likes")
+  })
+}
+
+thumbDown = () => {
+  axios.put(urlAddress + "like", 
+    {
+      likes: this.state.postInfo.likes,
+      dislikes: this.state.postInfo.dislikes + 1, 
+      postid: this.state.postInfo.id
+    })
+  .then((response) => {
+    console.log("dislikes updated");
+    this.componentDidMount();
+})
+.catch(error => {
+  console.log("unable to update dislikes")
+})
+}
+
   render() {
 
     let output = 
       <>
         <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
-          <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments} addComment={this.addComment}/>} />
+          <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts} chosenTopicName={this.state.chosenTopicName}/>} />
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} 
+                                                          postInfo={this.state.postInfo} 
+                                                          postIds={this.state.postIds} 
+                                                          comments={this.state.comments} 
+                                                          addComment={this.addComment}
+                                                          thumbUp={this.thumbUp}
+                                                          thumbDown={this.thumbDown}/>} />
         </Switch>
       </>
 

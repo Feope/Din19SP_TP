@@ -45,9 +45,9 @@ export default function onetopic(props) {
         <div  className={styles.ForumTopic}>
           <img alt=" for the post" src={`/pictures/${props.postInfo.picturename}`} className={styles.picture}></img>
           <div className={styles.likesCommentsContainer}>
-            <div>{props.postInfo.likes}<img alt="likes" className={styles.likeIcons} src="/likes2.png"></img></div>
-            <div>{props.postInfo.dislikes}<img alt="dislikes" className={styles.likeIcons} src="/dislikes2.png"></img></div>
-            <div>?<img alt="comments" className={styles.likeIcons} src="/comment2.png"/></div> {/*should we add comment section to picture_posts or get the amount of comments from comments table?*/}
+            <div>{props.postInfo.likes}<img alt="likes" className={styles.likeIcons} src="/likes2.png" onClick={() => props.thumbUp()}></img></div>
+            <div>{props.postInfo.dislikes}<img alt="dislikes" className={styles.likeIcons} src="/dislikes2.png" onClick={() => props.thumbDown()}></img></div>
+            <div>{props.comments.length}<img alt="comments" className={styles.likeIcons} src="/comment2.png"/></div> {/*should we add comment section to picture_posts or get the amount of comments from comments table?*/}
           </div>
         </div>
         <div className={styles.textArea}>
