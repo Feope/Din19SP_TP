@@ -10,7 +10,6 @@ import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
-
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
 const urlAddress = "http://localhost:4001/" //url address for api Local
 
@@ -226,6 +225,22 @@ thumbDown = () => {
   console.log("unable to update dislikes")
 })
 }
+
+  addComment = (comment) => {
+
+    let userID = 1 
+    if (this.state.loggedID !== "") {
+      userID = this.state.loggedID
+    }
+    axios.post(urlAddress + 'comment', {postsid: this.state.postInfo.id, userid: userID, textcomment: comment})
+    .then((response => {
+      console.log("new comment created");
+      window.location.reload(true)
+    }))
+    .catch(error => {
+      alert("hmm, something wrong???");
+    })
+  };
 
   render() {
 

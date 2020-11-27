@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from './onetopic.module.css';
 
-export default function onetopic(props) {
+export default function Onetopic(props) {
 
-  function comment(event) {
-    event.preventDefault();
-    props.addComment(
-      event.target['comment'].value
-    );
-  }
-  
+ function comment(event) {
+   event.preventDefault();
+   props.addComment(
+     event.target['comment'].value
+   );
+ }
+
+ 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const postid = urlParams.get('post');
