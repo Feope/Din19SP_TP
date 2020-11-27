@@ -119,7 +119,6 @@ app.post('/user', (req, res) => {
         }
       })
       )
-
   })
 });
 
@@ -185,6 +184,20 @@ app.post('/comment', (req, res) => {
   })
   .catch(error => res.sendStatus(500));
 })
+
+//updating likes and dislikes of a spesific post
+app.put('/like', (req, res) => {
+  client.query('UPDATE picture_posts SET likes = $1, dislikes = $2 WHERE id = $3', [req.body.likes, req.body.dislikes, req.body.postid])
+  .then(results => {
+    res.sendStatus(200);
+    console.log("likes updated");
+  })
+  .catch(error => res.sendStatus(500));
+})
+
+
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

@@ -3,7 +3,7 @@
   border: 1px black;
   vertical-align: middle;
   position: relative;
-  top: 50px;
+  top: 20px;
   margin: auto;
   display: grid;
   grid-template-columns: auto;
@@ -21,7 +21,6 @@
   position: relative;
   margin: auto;
   margin-bottom: 125px;
-  margin-top: 75px;
 }
 
 @media (min-width:1000px){
@@ -52,4 +51,10 @@ display: flex;
 position: absolute; 
       bottom: 0;
       right:0; 
+}
+
+.title{
+  margin-top: 15px;
+  font-size: 46px;
+  text-align: center;
 }
