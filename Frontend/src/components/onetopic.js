@@ -68,8 +68,8 @@ export default function Onetopic(props) {
         </div>
       <form className={styles.commentForm} onSubmit={comment}>
         <label htmlFor="comment">Write new comment:</label><br/>
-        <input type="text" name="comment"/> <br/>
-        <input type="submit" value="Submit"/>
+        <textarea type="text" name="comment" className={styles.commentinsert}/> <br/>
+        <input type="submit" value="Submit" className={styles.submitbutton}/>
       </form>
     </div>
   )
