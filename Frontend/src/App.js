@@ -226,22 +226,6 @@ thumbDown = () => {
 })
 }
 
-  addComment = (comment) => {
-
-    let userID = 1 
-    if (this.state.loggedID !== "") {
-      userID = this.state.loggedID
-    }
-    axios.post(urlAddress + 'comment', {postsid: this.state.postInfo.id, userid: userID, textcomment: comment})
-    .then((response => {
-      console.log("new comment created");
-      window.location.reload(true)
-    }))
-    .catch(error => {
-      alert("hmm, something wrong???");
-    })
-  };
-
   render() {
 
     let output = 

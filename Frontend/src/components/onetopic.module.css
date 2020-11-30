@@ -62,3 +62,21 @@
   font-weight: bold;
   text-decoration: underline;
 }
+
+.commentBox{
+  display: flex;
+  border: 1px solid black;
+  border-radius: 5px;
+  flex-direction: column;
+  margin: 5px;
+  background: whitesmoke;
+}
+.userid{
+  padding: 5px;
+}
+.textComment{
+  padding: 5px;
+}
+.commentTime{
+  padding: 5px;
+}

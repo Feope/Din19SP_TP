@@ -59,8 +59,10 @@ export default function Onetopic(props) {
       <div className={styles.commentsTitle}>COMMENTS</div>
         <div> 
           {props.comments.map( comment => (
-            <div key={comment.id}>
-            <div> {comment.textcomment} </div> 
+            <div key={comment.id} className={styles.commentBox}>
+              <div className={styles.userid}> Anonymous {comment.userid} </div>
+              <div className={styles.textComment}> {comment.textcomment} </div> 
+              <div className={styles.commentTime}> {comment.timedate} </div>
             </div>
           ))}
         </div>

@@ -125,12 +125,10 @@ app.post('/user', (req, res) => {
 app.post('/register', (req, res) => {
   console.log(req.body);
 
-  let date = new Date();
-  let fullDate = "";
-  let fixedMonth = parseInt(date.getMonth());
-  fixedMonth = fixedMonth + 1;
-
-  fullDate = date.getDate() + "/" + fixedMonth + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+  var today = new Date();
+  var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var fullDate = date +' '+ time ;
 
   let username = req.body.username.trim();
   let password = req.body.password.trim();
@@ -169,12 +167,10 @@ app.post('/register', (req, res) => {
 
 //posting a comment
 app.post('/comment', (req, res) => {
-  let date = new Date();
-  let fullDate = "";
-  let fixedMonth = parseInt(date.getMonth());
-  fixedMonth = fixedMonth + 1;
-
-  fullDate = date.getDate() + "/" + fixedMonth + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+  var today = new Date();
+  var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes();
+  var fullDate = date +' '+ time ;
 
   client.query('INSERT INTO comments(id, postsid, userid, textcomment, timedate) VALUES ($1, $2, $3, $4, $5)', 
                                     [uuidv4(), req.body.postsid, req.body.userid, req.body.textcomment, fullDate])
