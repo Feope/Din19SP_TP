@@ -8,6 +8,7 @@ import axios from 'axios';
 import UserPage from './components/UserPage'; 
 import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
+import UserImage from './components/UserImage';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
@@ -33,7 +34,8 @@ export default class App extends Component {
       loggedID: "",
       YourUserData: [],
       test: false,
-      chosenTopicName: ""
+      chosenTopicName: "",
+      show: false
     };
   }
 
@@ -70,7 +72,6 @@ export default class App extends Component {
     axios.get(urlAddress+ "userID/"+ postid)
     .then((response) => {
       this.setState({YourUserData: response.data[0]});
-      console.log(response.data[0]);
     });
   }
 
@@ -165,7 +166,6 @@ export default class App extends Component {
     axios.get(urlAddress + "picture_posts/" + newTopic)
     .then((response) => {
       this.setState({chosenTopicPosts: response.data, chosenTopicName:topicName})
-      console.log("somethin happened");
     });
   }
   
@@ -226,21 +226,22 @@ thumbDown = () => {
 })
 }
 
-  addComment = (comment) => {
-
-    let userID = 1 
-    if (this.state.loggedID !== "") {
-      userID = this.state.loggedID
-    }
-    axios.post(urlAddress + 'comment', {postsid: this.state.postInfo.id, userid: userID, textcomment: comment})
-    .then((response => {
-      console.log("new comment created");
-      window.location.reload(true)
-    }))
-    .catch(error => {
-      alert("hmm, something wrong???");
+  changeUserImage = () => {
+    axios.put(urlAddress + "userimage", {userid: this.state.loggedID})
+    .then((response) => {
+      this.showModal();
+      this.getUserData(this.state.YourUserData.id);
     })
+    .catch(error => {
+      alert("hmmm, something went wrong. Please try again");
+    })
+
+  }
+
+  showModal = () => {
+    this.setState({show: !this.state.show});
   };
+
 
   render() {
 
@@ -267,7 +268,8 @@ thumbDown = () => {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage UserData={this.state.YourUserData}/>
+        <YourUserPage UserData={this.state.YourUserData} showModal={this.showModal}/>
+        <UserImage showModal={this.showModal} changeUserImage={this.changeUserImage} show={this.state.show}/>
       </>
     }
     else if(this.state.page === "userpage"){

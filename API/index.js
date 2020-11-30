@@ -95,7 +95,7 @@ app.get('/post/:postid', (req, res) => {
 })
 
 app.get('/userID/:postid', (req, res) => {
-  client.query('SELECT username, picturename, joindate, bio, medals FROM users WHERE id = $1', [req.params.postid]).then(results => {
+  client.query('SELECT username, id, picturename, joindate, bio, medals FROM users WHERE id = $1', [req.params.postid]).then(results => {
     res.json(results.rows);
     
   })
@@ -191,6 +191,17 @@ app.put('/like', (req, res) => {
   .then(results => {
     res.sendStatus(200);
     console.log("likes updated");
+  })
+  .catch(error => res.sendStatus(500));
+})
+
+//replacing users image with new random image
+app.put('/userimage', (req, res) => {
+  let pictureNumber = Math.floor(Math.random()*11)
+  client.query('UPDATE users SET picturename = $1 WHERE id = $2', [pictureNumber, req.body.userid])
+  .then(results => {
+    res.sendStatus(200);
+    console.log("picture updated");
   })
   .catch(error => res.sendStatus(500));
 })
