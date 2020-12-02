@@ -155,6 +155,28 @@ export default class App extends Component {
     }
   }
 
+  deleteAccount = () => {
+    let ids = this.state.loggedID;
+    console.log(ids);
+
+    if(this.state.loggedID){
+      axios.post(urlAddress + 'delete', {
+        ids
+      })
+      .then((response) => {
+        alert('Successfully deleted your Account!');
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('An error occurred please try again later!');
+      })
+    }
+
+    this.setState({page: ""});
+    this.setState({loggedID: ""});
+    this.setState({loggedIn: false});
+  }
+
   closeModal = () =>{
     this.setState({page: ""});
   }
@@ -186,7 +208,7 @@ export default class App extends Component {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage UserData={this.state.YourUserData}/>
+        <YourUserPage deleteAccount={this.deleteAccount} UserData={this.state.YourUserData}/>
       </>
     }
     else if(this.state.page === "userpage"){

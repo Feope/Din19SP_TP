@@ -33,7 +33,7 @@ export default function YourUserPage(props) {
                     recent comment <br/>
                     recent comment <br/>
                 </div>
-                <div className={styles.DeleteButton}>
+                <div onClick={props.deleteAccount} className={styles.DeleteButton}>
                     DeleteAccount
                 </div>
                 
