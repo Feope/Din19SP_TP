@@ -15,7 +15,8 @@ export default class UserImage extends Component {
           I dare you to try and change it!
         </div>
         <div>
-          <button onClick={() => this.props.changeUserImage()} className={styles.button}>I dare!</button>
+          <audio id="myaudio" src="/audio/dare.mp3" ></audio>
+          <button onMouseOver={() => document.getElementById('myaudio').play()} onClick={() => this.props.changeUserImage()} className={styles.button}>I dare!</button>
           <button onClick={() => this.props.showModal()} className={styles.button}>I'm happy with my picture</button>
         </div>
       </div>
