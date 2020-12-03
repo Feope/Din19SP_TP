@@ -20,7 +20,7 @@ export default class App extends Component {
     super(props);
     this.state = 
     {
-      page: "",
+      page: "", 
       username: "",
       password: "",
       loggedIn: false,
@@ -33,9 +33,11 @@ export default class App extends Component {
       postIds: [],
       loggedID: "",
       YourUserData: [],
-      test: false,
       chosenTopicName: "",
-      show: false
+      show: false,
+      userComments: [],
+      userPosts: [],
+      allComments: []
     };
   }
 
@@ -64,6 +66,10 @@ export default class App extends Component {
     .then((response) => {
       this.setState({postIds: response.data})
     });
+    axios.get(urlAddress + "comments")
+    .then((response) => {
+      this.setState({allComments: response.data});
+    });
   };
 
 
@@ -72,6 +78,20 @@ export default class App extends Component {
     axios.get(urlAddress+ "userID/"+ postid)
     .then((response) => {
       this.setState({YourUserData: response.data[0]});
+    });
+  }
+
+  getUserComments = (UID) => {
+    axios.get(urlAddress + "userComments/" + UID)
+    .then((response) => {
+      this.setState({userComments: response.data});
+    });
+  }
+
+  getUserPosts = (UID) => {
+    axios.get(urlAddress + "userPosts/" + UID)
+    .then((response) => {
+      this.setState({userPosts: response.data});
     });
   }
 
@@ -114,6 +134,8 @@ export default class App extends Component {
           this.setState({loggedIn: true });
           this.setState({page: "" });
           this.getUserData(response.data);
+          this.getUserComments(response.data);
+          this.getUserPosts(response.data);
         }
         else{
           this.setState({ loggedIn: false });
@@ -249,7 +271,7 @@ thumbDown = () => {
       <>
         <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
-          <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts} chosenTopicName={this.state.chosenTopicName}/>} />
+          <Route path="/topics/" component={() => <PictureTopicContainer allComments={this.state.allComments} chosenTopicPosts={this.state.chosenTopicPosts} chosenTopicName={this.state.chosenTopicName}/>} />
           <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} 
                                                           postInfo={this.state.postInfo} 
                                                           postIds={this.state.postIds} 
@@ -268,7 +290,7 @@ thumbDown = () => {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage UserData={this.state.YourUserData} showModal={this.showModal}/>
+        <YourUserPage UserData={this.state.YourUserData} userComments={this.state.userComments}  allPosts={this.state.allPosts} userPosts={this.state.userPosts} showModal={this.showModal}/>
         <UserImage showModal={this.showModal} changeUserImage={this.changeUserImage} show={this.state.show}/>
       </>
     }

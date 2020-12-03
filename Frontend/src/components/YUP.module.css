@@ -63,6 +63,13 @@
     grid-column-start: 3;
     grid-row: 3 ;
     grid-row-end: 5;
+    
+}
+
+.commentPost {
+  overflow: scroll;
+  max-height: 93%;
+  margin-top: 5px;
 }
 
 .DeleteButton{
@@ -112,4 +119,30 @@
     margin: auto;
     width: 50%;
     text-align: center;
+}
+
+.commentsTitle {
+  width: 135px;
+}
+
+.postsTitle {
+  width: 135px;
+}
+
+.commentPostBox {
+  background-color: whitesmoke;
+  margin: 5px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.flexBox {
+  text-align: center;
+  display: flex;
+}
+.postPicture {
+  width: 50px;
+  height: 50px;
 }
