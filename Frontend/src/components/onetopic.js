@@ -10,7 +10,6 @@ export default function Onetopic(props) {
    );
  }
 
- 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const postid = urlParams.get('post');

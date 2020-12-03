@@ -31,7 +31,6 @@ app.get('/', (req, res) => {
 app.get('/picture_posts', (req, res) => {
   client.query('SELECT * FROM picture_posts').then(results => {
     res.json(results.rows);
-    
   })
 })
 
@@ -59,7 +58,6 @@ app.get('/users', (req, res) => {
 app.get('/comments', (req, res) => {
   client.query('SELECT * FROM comments').then(results => {
     res.json(results.rows);
-    
   })
 })
 
@@ -209,6 +207,20 @@ app.put('/userimage', (req, res) => {
     console.log("picture updated");
   })
   .catch(error => res.sendStatus(500));
+})
+
+//getting comments from spesific user
+app.get('/userComments/:uid', (req, res) => {
+  client.query('SELECT * FROM comments WHERE userid = $1', [req.params.uid]).then(results => {
+    res.json(results.rows);
+  })
+})
+
+//getting posts from spesific user
+app.get('/userPosts/:uid', (req, res) => {
+  client.query('SELECT * FROM picture_posts WHERE ownerid = $1', [req.params.uid]).then(results => {
+    res.json(results.rows);
+  })
 })
 
 

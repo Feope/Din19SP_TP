@@ -20,7 +20,7 @@ export default class App extends Component {
     super(props);
     this.state = 
     {
-      page: "",
+      page: "", 
       username: "",
       password: "",
       loggedIn: false,
@@ -33,9 +33,11 @@ export default class App extends Component {
       postIds: [],
       loggedID: "",
       YourUserData: [],
-      test: false,
       chosenTopicName: "",
-      show: false
+      show: false,
+      userComments: [],
+      userPosts: [],
+      allComments: []
     };
   }
 
@@ -63,17 +65,16 @@ export default class App extends Component {
     axios.get(urlAddress + "postids")
     .then((response) => {
       this.setState({postIds: response.data})
+    axios.get(urlAddress + "comments")
+    .then((response) => {
+      this.setState({allComments: response.data});
     });
-
-    console.log(document.cookie.slice(9));
     if(this.checkCookie()){
       let temp = this.checkCookie();
       this.setState({loggedID: temp});
       this.setState({loggedIn: true});
       this.getUserData(temp);
-      console.log(temp)
     }
-
     this.checkDarkmode();
   };
 
@@ -129,6 +130,20 @@ export default class App extends Component {
     });
   }
 
+  getUserComments = (UID) => {
+    axios.get(urlAddress + "userComments/" + UID)
+    .then((response) => {
+      this.setState({userComments: response.data});
+    });
+  }
+
+  getUserPosts = (UID) => {
+    axios.get(urlAddress + "userPosts/" + UID)
+    .then((response) => {
+      this.setState({userPosts: response.data});
+    });
+  }
+
 
   loginChange = () => {
     if(this.state.loggedIn === false)
@@ -168,6 +183,8 @@ export default class App extends Component {
           this.setState({loggedIn: true });
           this.setState({page: "" });
           this.getUserData(response.data);
+          this.getUserComments(response.data);
+          this.getUserPosts(response.data);
           document.cookie = "username=" + this.state.loggedID;
         }
         else{
@@ -326,7 +343,7 @@ thumbDown = () => {
       <>
         <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
-          <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts} chosenTopicName={this.state.chosenTopicName}/>} />
+          <Route path="/topics/" component={() => <PictureTopicContainer allComments={this.state.allComments} chosenTopicPosts={this.state.chosenTopicPosts} chosenTopicName={this.state.chosenTopicName}/>} />
           <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} 
                                                           postInfo={this.state.postInfo} 
                                                           postIds={this.state.postIds} 
@@ -345,7 +362,7 @@ thumbDown = () => {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} UserData={this.state.YourUserData} showModal={this.showModal}/>
+        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} allPosts={this.state.allPosts} userPosts={this.state.userPosts} userComments={this.state.userComments} UserData={this.state.YourUserData} showModal={this.showModal}/>
         <UserImage showModal={this.showModal} changeUserImage={this.changeUserImage} show={this.state.show}/>
       </>
     }
