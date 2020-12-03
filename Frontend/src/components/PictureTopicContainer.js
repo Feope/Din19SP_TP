@@ -4,6 +4,10 @@ import styles from './PTC.module.css';
 export default function pictureTopicContainer(props) {
 
     return (
+      <>
+        <div className={styles.title}>
+          {props.chosenTopicName}
+        </div>
         <div className={styles.pictureTopicContainer}>
           {props.chosenTopicPosts.map(post => (
             <a key={post.id} href={`/post?post=${post.id}`}>
@@ -17,5 +21,6 @@ export default function pictureTopicContainer(props) {
             </a>
           ))}
         </div>
+      </>
     )
 }

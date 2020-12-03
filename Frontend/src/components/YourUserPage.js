@@ -6,13 +6,14 @@ export default function YourUserPage(props) {
         <div>
             <div className={styles.YourName}> <h3>{props.UserData.username}</h3></div>
             <div className={styles.YourUserPage}>
-                <div className={styles.YourImage}>
-                    image
+                <div className={styles.YourImageContainer}>
+                    <img alt="user" className={styles.YourImage} src={`userimages/${props.UserData.picturename}.png`}></img>
+                    <button onClick={props.showModal}>Change image</button>
                 </div>
                 <div className={styles.YourInfo}>
                     I <br/>
                     am <br/>
-                    {props.UserData.username} <br/>
+                    {props.UserData.username}<br/>
                 </div>
                 <div className={styles.YourSettings}>
                     <div className={styles.Pointer} onClick={props.toggleDarkmode}>

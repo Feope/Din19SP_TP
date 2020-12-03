@@ -19,7 +19,7 @@ export default function header(props) {
       </div>
       <div className={styles.headerLinksContainer}>
         {props.topics.map(topic => (
-          <Link key={topic.topicid} className={styles.headerLinks} to={`/topics/${topic.topic}`} onClick={()=> props.topicChange(topic.topicid)}>
+          <Link key={topic.topicid} className={styles.headerLinks} to={`/topics/${topic.topic}`} onClick={()=> props.topicChange(topic.topicid, topic.topic)}>
             <div>{topic.topic}</div>
           </Link>
         ))}

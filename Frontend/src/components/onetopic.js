@@ -1,8 +1,16 @@
 import React from 'react';
 import styles from './onetopic.module.css';
 
-export default function onetopic(props) {
-  
+export default function Onetopic(props) {
+
+ function comment(event) {
+   event.preventDefault();
+   props.addComment(
+     event.target['comment'].value
+   );
+ }
+
+ 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const postid = urlParams.get('post');
@@ -38,9 +46,9 @@ export default function onetopic(props) {
         <div  className={styles.ForumTopic}>
           <img alt=" for the post" src={`/pictures/${props.postInfo.picturename}`} className={styles.picture}></img>
           <div className={styles.likesCommentsContainer}>
-            <div>{props.postInfo.likes}<img alt="likes" className={styles.likeIcons} src="/likes2.png"></img></div>
-            <div>{props.postInfo.dislikes}<img alt="dislikes" className={styles.likeIcons} src="/dislikes2.png"></img></div>
-            <div>?<img alt="comments" className={styles.likeIcons} src="/comment2.png"/></div> {/*should we add comment section to picture_posts or get the amount of comments from comments table?*/}
+            <div>{props.postInfo.likes}<img alt="likes" className={styles.likeIcons} src="/likes2.png" onClick={() => props.thumbUp()}></img></div>
+            <div>{props.postInfo.dislikes}<img alt="dislikes" className={styles.likeIcons} src="/dislikes2.png" onClick={() => props.thumbDown()}></img></div>
+            <div>{props.comments.length}<img alt="comments" className={styles.likeIcons} src="/comment2.png"/></div> {/*should we add comment section to picture_posts or get the amount of comments from comments table?*/}
           </div>
         </div>
         <div className={styles.textArea}>
@@ -51,15 +59,17 @@ export default function onetopic(props) {
       <div className={styles.commentsTitle}>COMMENTS</div>
         <div> 
           {props.comments.map( comment => (
-            <div key={comment.id}>
-            <div> {comment.textcomment} </div> 
+            <div key={comment.id} className={styles.commentBox}>
+              <div className={styles.userid}> Anonymous {comment.userid} </div>
+              <div className={styles.textComment}> {comment.textcomment} </div> 
+              <div className={styles.commentTime}> {comment.timedate} </div>
             </div>
           ))}
         </div>
-      <form className={styles.commentForm}>
+      <form className={styles.commentForm} onSubmit={comment}>
         <label htmlFor="comment">Write new comment:</label><br/>
-        <input type="text" name="comment"/> <br/>
-        <input type="submit" value="Submit"/>
+        <textarea type="text" name="comment" className={styles.commentinsert}/> <br/>
+        <input type="submit" value="Submit" className={styles.submitbutton}/>
       </form>
     </div>
   )

@@ -8,8 +8,8 @@ import axios from 'axios';
 import UserPage from './components/UserPage'; 
 import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
+import UserImage from './components/UserImage';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
-
 
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
 const urlAddress = "http://localhost:4001/" //url address for api Local
@@ -33,6 +33,9 @@ export default class App extends Component {
       postIds: [],
       loggedID: "",
       YourUserData: [],
+      test: false,
+      chosenTopicName: "",
+      show: false
     };
   }
 
@@ -123,7 +126,6 @@ export default class App extends Component {
     axios.get(urlAddress+ "userID/"+ postid)
     .then((response) => {
       this.setState({YourUserData: response.data[0]});
-      console.log(response.data[0]);
     });
   }
 
@@ -237,13 +239,86 @@ export default class App extends Component {
     this.setState({page: ""});
   }
 
-  topicChange = (newTopic) => {
+  topicChange = (newTopic, topicName) => {
     axios.get(urlAddress + "picture_posts/" + newTopic)
     .then((response) => {
-      this.setState({chosenTopicPosts: response.data})
-      console.log("somethin happened");
+      this.setState({chosenTopicPosts: response.data, chosenTopicName:topicName})
     });
   }
+  
+  addComment = (comment) => {
+    if (comment.length === 0) {
+      alert("The comment box was empty, please write even something!")
+    }
+    else {
+      let userID = 1
+      if (this.state.loggedID !== "") {
+        userID = this.state.loggedID
+      }
+      axios.post(urlAddress + 'comment',
+        {
+          postsid: this.state.postInfo.id, 
+          userid: userID,
+          textcomment: comment
+        })
+      .then((response => {
+        console.log("new comment created");
+        this.componentDidMount();
+      }))
+      .catch(error => {
+      alert("hmm, something wrong???");
+      })
+    }
+  };
+
+  thumbUp = () => {
+    axios.put(urlAddress + "like", 
+      {
+        likes: this.state.postInfo.likes+1,
+        dislikes: this.state.postInfo.dislikes, 
+        postid: this.state.postInfo.id
+      })
+    .then((response) => {
+      console.log("likes updated");
+      this.componentDidMount();
+  })
+  .catch(error => {
+    console.log("unable to update likes")
+  })
+}
+
+thumbDown = () => {
+  axios.put(urlAddress + "like", 
+    {
+      likes: this.state.postInfo.likes,
+      dislikes: this.state.postInfo.dislikes + 1, 
+      postid: this.state.postInfo.id
+    })
+  .then((response) => {
+    console.log("dislikes updated");
+    this.componentDidMount();
+})
+.catch(error => {
+  console.log("unable to update dislikes")
+})
+}
+
+  changeUserImage = () => {
+    axios.put(urlAddress + "userimage", {userid: this.state.loggedID})
+    .then((response) => {
+      this.showModal();
+      this.getUserData(this.state.YourUserData.id);
+    })
+    .catch(error => {
+      alert("hmmm, something went wrong. Please try again");
+    })
+
+  }
+
+  showModal = () => {
+    this.setState({show: !this.state.show});
+  };
+
 
   render() {
 
@@ -251,8 +326,14 @@ export default class App extends Component {
       <>
         <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
-          <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts}/>} />
-          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} postInfo={this.state.postInfo} postIds={this.state.postIds} comments={this.state.comments}/>} />
+          <Route path="/topics/" component={() => <PictureTopicContainer chosenTopicPosts={this.state.chosenTopicPosts} chosenTopicName={this.state.chosenTopicName}/>} />
+          <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} 
+                                                          postInfo={this.state.postInfo} 
+                                                          postIds={this.state.postIds} 
+                                                          comments={this.state.comments} 
+                                                          addComment={this.addComment}
+                                                          thumbUp={this.thumbUp}
+                                                          thumbDown={this.thumbDown}/>} />
         </Switch>
       </>
 
@@ -264,7 +345,8 @@ export default class App extends Component {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} UserData={this.state.YourUserData}/>
+        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} UserData={this.state.YourUserData} showModal={this.showModal}/>
+        <UserImage showModal={this.showModal} changeUserImage={this.changeUserImage} show={this.state.show}/>
       </>
     }
     else if(this.state.page === "userpage"){
