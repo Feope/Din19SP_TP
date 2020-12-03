@@ -120,6 +120,15 @@ app.post('/user', (req, res) => {
   })
 });
 
+app.post('/delete', (req, res) => {
+  let ids = req.body.ids.trim();
+  console.log(ids);
+  client.query('DELETE FROM users WHERE id = $1', [ids]).then(results => {
+    console.log(results);
+    res.status(201).send('Row deleted!')
+  });
+});
+
 app.post('/register', (req, res) => {
   console.log(req.body);
 

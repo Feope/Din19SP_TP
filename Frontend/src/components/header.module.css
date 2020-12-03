@@ -25,15 +25,16 @@
 
 .loginIndicator {
   text-align: right;
-  flex-grow: 2;
   padding-right: 5px;
+  cursor: pointer;
 }
 
 #headerLogo {
   font-size: 35px;
   font-weight: bold;
   text-align: right;
-  flex-grow: 3;
+  width: 100%;
+  text-align: center;
 }
 
 .userImage {
