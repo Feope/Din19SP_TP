@@ -68,7 +68,7 @@ export default class App extends Component {
     axios.get(urlAddress + "comments")
     .then((response) => {
       this.setState({allComments: response.data});
-    });
+    })};
     if(this.checkCookie()){
       let temp = this.checkCookie();
       this.setState({loggedID: temp});
