@@ -65,6 +65,7 @@ export default class App extends Component {
     axios.get(urlAddress + "postids")
     .then((response) => {
       this.setState({postIds: response.data})
+    });
     axios.get(urlAddress + "comments")
     .then((response) => {
       this.setState({allComments: response.data});
@@ -76,7 +77,7 @@ export default class App extends Component {
       this.getUserData(temp);
     }
     this.checkDarkmode();
-  };
+  }
 
   getCookie = (cname) => {
     var name = cname + "=";
