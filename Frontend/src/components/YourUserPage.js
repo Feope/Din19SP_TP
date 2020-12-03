@@ -15,7 +15,9 @@ export default function YourUserPage(props) {
                     {props.UserData.username} <br/>
                 </div>
                 <div className={styles.YourSettings}>
-                    setting 1 <br/>
+                    <div className={styles.Pointer} onClick={props.toggleDarkmode}>
+                    Darkmode <br/>
+                    </div>                    
                     setting 2 <br/>
                     setting 3 <br/>
                     setting 4 <br/>

@@ -61,7 +61,62 @@ export default class App extends Component {
     .then((response) => {
       this.setState({postIds: response.data})
     });
+
+    console.log(document.cookie.slice(9));
+    if(this.checkCookie()){
+      let temp = this.checkCookie();
+      this.setState({loggedID: temp});
+      this.setState({loggedIn: true});
+      this.getUserData(temp);
+      console.log(temp)
+    }
+
+    this.checkDarkmode();
   };
+
+  getCookie = (cname) => {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+  
+  checkCookie = () => {
+    var user = this.getCookie("username");
+    if(user !== "") {
+      return user;
+    }
+  } 
+
+  checkDarkmode = () => {
+    var dark = this.getCookie("darkmode");
+    console.log(dark + "test");
+    if(dark === "true"){
+      document.body.style.backgroundColor = " rgb(56, 56, 61)"; 
+    }
+  }
+
+  toggleDarkmode = () => {
+    var dark = this.getCookie("darkmode");
+    if(dark === "true"){
+      document.cookie = "darkmode=false; expires=Thu, 18 Dec 2031 12:00:00 UTC; SameSite=Lax";
+    }
+    else if(dark === "false"){
+      document.cookie = "darkmode=true; expires=Thu, 18 Dec 2031 12:00:00 UTC; SameSite=Lax";
+    }
+    else{
+      document.cookie = "darkmode=true; expires=Thu, 18 Dec 2031 12:00:00 UTC; SameSite=Lax";
+    }
+    window.location.reload(false);
+  }
 
   getUserData = (UID) => {
     const postid =UID;
@@ -111,6 +166,7 @@ export default class App extends Component {
           this.setState({loggedIn: true });
           this.setState({page: "" });
           this.getUserData(response.data);
+          document.cookie = "username=" + this.state.loggedID;
         }
         else{
           this.setState({ loggedIn: false });
@@ -208,7 +264,7 @@ export default class App extends Component {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage deleteAccount={this.deleteAccount} UserData={this.state.YourUserData}/>
+        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} UserData={this.state.YourUserData}/>
       </>
     }
     else if(this.state.page === "userpage"){
@@ -231,7 +287,7 @@ export default class App extends Component {
       <div className="appContainer">
         <Router>
           { login }
-          <Header topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
+          <Header loggedIN={this.state.loggedIn} topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
           { output } 
         </Router>
       </div>

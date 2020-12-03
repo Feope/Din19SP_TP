@@ -11,6 +11,10 @@
     padding-left: 40px;
 }
 
+.Pointer{
+    cursor: pointer;
+}
+
 .YourImage{
     width: 120px;
     height: 120px;
