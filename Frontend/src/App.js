@@ -64,8 +64,62 @@ export default class App extends Component {
     .then((response) => {
       this.setState({postIds: response.data})
     });
+
+    console.log(document.cookie.slice(9));
+    if(this.checkCookie()){
+      let temp = this.checkCookie();
+      this.setState({loggedID: temp});
+      this.setState({loggedIn: true});
+      this.getUserData(temp);
+      console.log(temp)
+    }
+
+    this.checkDarkmode();
   };
 
+  getCookie = (cname) => {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+  
+  checkCookie = () => {
+    var user = this.getCookie("username");
+    if(user !== "") {
+      return user;
+    }
+  } 
+
+  checkDarkmode = () => {
+    var dark = this.getCookie("darkmode");
+    console.log(dark + "test");
+    if(dark === "true"){
+      document.body.style.backgroundColor = " rgb(56, 56, 61)"; 
+    }
+  }
+
+  toggleDarkmode = () => {
+    var dark = this.getCookie("darkmode");
+    if(dark === "true"){
+      document.cookie = "darkmode=false; expires=Thu, 18 Dec 2031 12:00:00 UTC; SameSite=Lax";
+    }
+    else if(dark === "false"){
+      document.cookie = "darkmode=true; expires=Thu, 18 Dec 2031 12:00:00 UTC; SameSite=Lax";
+    }
+    else{
+      document.cookie = "darkmode=true; expires=Thu, 18 Dec 2031 12:00:00 UTC; SameSite=Lax";
+    }
+    window.location.reload(false);
+  }
 
   getUserData = (UID) => {
     const postid =UID;
@@ -114,6 +168,7 @@ export default class App extends Component {
           this.setState({loggedIn: true });
           this.setState({page: "" });
           this.getUserData(response.data);
+          document.cookie = "username=" + this.state.loggedID;
         }
         else{
           this.setState({ loggedIn: false });
@@ -156,6 +211,28 @@ export default class App extends Component {
       console.log(error);
     });
     }
+  }
+
+  deleteAccount = () => {
+    let ids = this.state.loggedID;
+    console.log(ids);
+
+    if(this.state.loggedID){
+      axios.post(urlAddress + 'delete', {
+        ids
+      })
+      .then((response) => {
+        alert('Successfully deleted your Account!');
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('An error occurred please try again later!');
+      })
+    }
+
+    this.setState({page: ""});
+    this.setState({loggedID: ""});
+    this.setState({loggedIn: false});
   }
 
   closeModal = () =>{
@@ -268,7 +345,7 @@ thumbDown = () => {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage UserData={this.state.YourUserData} showModal={this.showModal}/>
+        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} UserData={this.state.YourUserData} showModal={this.showModal}/>
         <UserImage showModal={this.showModal} changeUserImage={this.changeUserImage} show={this.state.show}/>
       </>
     }
@@ -292,7 +369,7 @@ thumbDown = () => {
       <div className="appContainer">
         <Router>
           { login }
-          <Header topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
+          <Header loggedIN={this.state.loggedIn} topicChange={this.topicChange} topics={this.state.topics} userChange={this.loginChange}/>
           { output } 
         </Router>
       </div>

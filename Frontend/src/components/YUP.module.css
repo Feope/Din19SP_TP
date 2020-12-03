@@ -11,6 +11,10 @@
     padding-left: 40px;
 }
 
+.Pointer{
+    cursor: pointer;
+}
+
 .YourImageContainer{
     width: 120px;
     display: inline-block;
