@@ -75,6 +75,8 @@ export default class App extends Component {
       this.setState({loggedID: temp});
       this.setState({loggedIn: true});
       this.getUserData(temp);
+      this.getUserComments(temp);
+      this.getUserPosts(temp);
     }
     this.checkDarkmode();
   }
