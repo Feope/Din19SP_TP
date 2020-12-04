@@ -49,7 +49,7 @@ export default function YourUserPage(props) {
       <div className={styles.YourName}> <h3>{props.UserData.username}</h3></div>
       <div className={styles.YourUserPage}>
         <div className={styles.YourImageContainer}>
-          <img alt="user" className={styles.YourImage} src={`userimages/${props.UserData.picturename}.png`}></img>
+          <img alt="user" className={styles.YourImage} src={`/userimages/${props.UserData.picturename}.png`}></img>
           <button onClick={props.showModal}>Change image</button>
         </div>
         <div className={styles.YourInfo}>
