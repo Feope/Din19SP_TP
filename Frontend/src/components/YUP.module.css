@@ -72,7 +72,9 @@
 
 .commentPost {
   overflow: scroll;
-  max-height: 93%;
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: 91%;
   margin-top: 5px;
 }
 

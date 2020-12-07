@@ -48,7 +48,7 @@ app.get('/postids', (req, res) => {
 
 //getting all from users
 app.get('/users', (req, res) => {
-  client.query('SELECT * FROM users').then(results => {
+  client.query('SELECT username, id, picturename, joindate, bio, medals FROM users').then(results => {
     res.json(results.rows);
     
   })
