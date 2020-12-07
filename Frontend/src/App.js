@@ -69,8 +69,8 @@ export default class App extends Component {
     axios.get(urlAddress + "comments")
     .then((response) => {
       this.setState({allComments: response.data});
-    })};
-    if(this.checkCookie()){
+    });
+    if (this.checkCookie()){
       let temp = this.checkCookie();
       this.setState({loggedID: temp});
       this.setState({loggedIn: true});
@@ -79,7 +79,7 @@ export default class App extends Component {
       this.getUserPosts(temp);
     }
     this.checkDarkmode();
-  }
+    }
 
   getCookie = (cname) => {
     var name = cname + "=";
@@ -291,6 +291,32 @@ export default class App extends Component {
     }
   };
 
+  addPost = (post) => {
+    if (post.length === 0) {
+      alert("Some value is empty, please give all values")
+    }
+    else {
+      let userID = 1
+      if (this.state.loggedID !== "") {
+        userID = this.state.loggedID
+      }
+      axios.post(urlAddress + 'picture_posts',
+      {
+        postname: post,
+        ownerid: userID,
+        topicid: this.state.topics.topicid,
+        //bio: postcomment
+      })
+      .then((response => {
+        console.log("new post created");
+        this.componentDidMount();
+      }))
+      .catch(error => {
+        alert("hmm, something wrong???");
+      })
+    }
+  };
+
   thumbUp = () => {
     axios.put(urlAddress + "like", 
       {
@@ -346,7 +372,7 @@ thumbDown = () => {
       <>
         <Switch>
           <Route exact path="/" component={() => <ForumTopicContainer topics={this.state.topics} topicChange={this.topicChange}/>}/>
-          <Route path="/topics/" component={() => <PictureTopicContainer allComments={this.state.allComments} chosenTopicPosts={this.state.chosenTopicPosts} chosenTopicName={this.state.chosenTopicName}/>} />
+          <Route path="/topics/" component={() => <PictureTopicContainer allComments={this.state.allComments} chosenTopicPosts={this.state.chosenTopicPosts} chosenTopicName={this.state.chosenTopicName} addPost={this.addPost}/>} />
           <Route path="/post/" component={() => <Onetopic urlAddress={this.urlAddress} 
                                                           postInfo={this.state.postInfo} 
                                                           postIds={this.state.postIds} 
