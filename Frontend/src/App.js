@@ -9,6 +9,7 @@ import UserPage from './components/UserPage';
 import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
 import UserImage from './components/UserImage';
+import ChangeBio from './components/ChangeBio';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
@@ -35,6 +36,7 @@ export default class App extends Component {
       YourUserData: [],
       chosenTopicName: "",
       show: false,
+      showChangeBio: false,
       userComments: [],
       userPosts: [],
       allComments: []
@@ -339,6 +341,23 @@ thumbDown = () => {
     this.setState({show: !this.state.show});
   };
 
+  showModalBio = () => {
+    this.setState({showChangeBio: !this.state.showChangeBio});
+  };
+
+  changeBio = (event) => {
+    axios.put(urlAddress + "changebio", 
+      {userid: this.state.loggedID,
+      newbio: event})
+    .then((response) => {
+      this.showModalBio();
+      this.getUserData(this.state.YourUserData.id);
+    })
+    .catch(error => {
+      alert("hmmm, something went wrong. Please try again");
+    })
+  }
+
 
   render() {
 
@@ -365,8 +384,10 @@ thumbDown = () => {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} allPosts={this.state.allPosts} userPosts={this.state.userPosts} userComments={this.state.userComments} UserData={this.state.YourUserData} showModal={this.showModal}/>
+        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} allPosts={this.state.allPosts} userPosts={this.state.userPosts} userComments={this.state.userComments} UserData={this.state.YourUserData} showModal={this.showModal} showModalBio={this.showModalBio}/>
         <UserImage showModal={this.showModal} changeUserImage={this.changeUserImage} show={this.state.show}/>
+        <ChangeBio showModal={this.showModalBio} changeBio={this.changeBio} showChangeBio={this.state.showChangeBio}/>
+        
       </>
     }
     else if(this.state.page === "userpage"){
