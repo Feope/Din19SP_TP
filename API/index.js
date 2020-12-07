@@ -223,6 +223,16 @@ app.get('/userPosts/:uid', (req, res) => {
   })
 })
 
+//users changning their bio
+app.put('/changebio', (req, res) => {
+  client.query('UPDATE users SET bio = $1 WHERE id = $2', [req.body.newbio, req.body.userid])
+  .then(results => {
+    res.sendStatus(200);
+    console.log("bio updated");
+  })
+  .catch(error => res.sendStatus(500));
+})
+
 
 
 
