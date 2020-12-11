@@ -9,6 +9,7 @@ import UserPage from './components/UserPage';
 import YourUserPage from './components/YourUserPage' ;
 import Login from './components/Login';
 import UserImage from './components/UserImage';
+import ChangeBio from './components/ChangeBio';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 //const urlAddress = "https://awesome-tp.herokuapp.com/"; //url address for api Heroku
@@ -35,9 +36,13 @@ export default class App extends Component {
       YourUserData: [],
       chosenTopicName: "",
       show: false,
+      showChangeBio: false,
       userComments: [],
       userPosts: [],
-      allComments: []
+      allComments: [],
+      allUsers: [],
+      postUsername: "",
+      chosenUser: []
     };
   }
 
@@ -50,14 +55,24 @@ export default class App extends Component {
     .then((response) => {
       this.setState({topics: response.data})
     });
+    axios.get(urlAddress + "users")
+    .then((response) => {
+      this.setState({allUsers: response.data});
+    });
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const postid = urlParams.get('post');
-  
-    axios.get(urlAddress + "post/" + postid)
-    .then((response) => {
-      this.setState({postInfo: response.data[0]});
-    });
+    if (postid) {
+      axios.get(urlAddress + "post/" + postid)
+      .then((response) => {
+        for(let i=0; i < this.state.allUsers.length; i++) {
+          if (this.state.allUsers[i].id === response.data[0].ownerid) {
+            var username = this.state.allUsers[i].username; 
+          }
+        }
+        this.setState({postInfo: response.data[0], postUsername: username});
+      }); 
+    }
     axios.get( urlAddress + "comments/" + postid)
     .then((response) => {
       this.setState({comments: response.data});
@@ -339,6 +354,31 @@ thumbDown = () => {
     this.setState({show: !this.state.show});
   };
 
+  showModalBio = () => {
+    this.setState({showChangeBio: !this.state.showChangeBio});
+  };
+
+  changeBio = (event) => {
+    axios.put(urlAddress + "changebio", 
+      {userid: this.state.loggedID,
+      newbio: event})
+    .then((response) => {
+      this.showModalBio();
+      this.getUserData(this.state.YourUserData.id);
+    })
+    .catch(error => {
+      alert("hmmm, something went wrong. Please try again");
+    })
+  }
+
+  seeUserPage = (username) => {
+    for (let i=0; i < this.state.allUsers.length; i++) {
+      if(this.state.allUsers[i].username === username) {
+        this.setState({chosenUser: this.state.allUsers[i]})
+      }
+    }
+  }
+
 
   render() {
 
@@ -353,7 +393,10 @@ thumbDown = () => {
                                                           comments={this.state.comments} 
                                                           addComment={this.addComment}
                                                           thumbUp={this.thumbUp}
-                                                          thumbDown={this.thumbDown}/>} />
+                                                          thumbDown={this.thumbDown}
+                                                          postUsername={this.state.postUsername}
+                                                          seeUserPage={this.seeUserPage}/>} />
+          <Route path="/users/" component ={() => <UserPage chosenUser={this.state.chosenUser} seeUserPage={this.seeUserPage}/>} />
         </Switch>
       </>
 
@@ -365,8 +408,10 @@ thumbDown = () => {
     if(this.state.page === "youruserpage"){
       output = 
       <>
-        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} allPosts={this.state.allPosts} userPosts={this.state.userPosts} userComments={this.state.userComments} UserData={this.state.YourUserData} showModal={this.showModal}/>
+        <YourUserPage toggleDarkmode={this.toggleDarkmode} deleteAccount={this.deleteAccount} allPosts={this.state.allPosts} userPosts={this.state.userPosts} userComments={this.state.userComments} UserData={this.state.YourUserData} showModal={this.showModal} showModalBio={this.showModalBio}/>
         <UserImage showModal={this.showModal} changeUserImage={this.changeUserImage} show={this.state.show}/>
+        <ChangeBio showModal={this.showModalBio} changeBio={this.changeBio} showChangeBio={this.state.showChangeBio}/>
+        
       </>
     }
     else if(this.state.page === "userpage"){

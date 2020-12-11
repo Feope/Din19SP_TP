@@ -48,7 +48,7 @@ app.get('/postids', (req, res) => {
 
 //getting all from users
 app.get('/users', (req, res) => {
-  client.query('SELECT * FROM users').then(results => {
+  client.query('SELECT username, id, picturename, joindate, bio, medals FROM users').then(results => {
     res.json(results.rows);
     
   })
@@ -221,6 +221,16 @@ app.get('/userPosts/:uid', (req, res) => {
   client.query('SELECT * FROM picture_posts WHERE ownerid = $1', [req.params.uid]).then(results => {
     res.json(results.rows);
   })
+})
+
+//users changning their bio
+app.put('/changebio', (req, res) => {
+  client.query('UPDATE users SET bio = $1 WHERE id = $2', [req.body.newbio, req.body.userid])
+  .then(results => {
+    res.sendStatus(200);
+    console.log("bio updated");
+  })
+  .catch(error => res.sendStatus(500));
 })
 
 

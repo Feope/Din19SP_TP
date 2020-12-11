@@ -59,13 +59,15 @@ export default function YourUserPage(props) {
           and <br/>
           some <br/>
           info of me: <br/>
-          {props.UserData.bio}
+          <div className={styles.bioBox}> {props.UserData.bio}</div>
         </div>
         <div className={styles.YourSettings}>
           <div className={styles.Pointer} onClick={props.toggleDarkmode}>
-          Darkmode <br/>
+            Darkmode <br/>
           </div>                    
-          setting 2 <br/>
+          <div className={styles.Pointer} onClick={props.showModalBio}>
+            change bio <br/>
+           </div> 
           setting 3 <br/>
           setting 4 <br/>
         </div>
