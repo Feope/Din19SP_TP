@@ -152,8 +152,8 @@ app.post('/register', (req, res) => {
       (password.length > 2))
      {
        bcrypt.hash(password, saltRounds, function(err, hash) {
-         let query = 'INSERT INTO public.users(id, username, password, joindate) VALUES ($1, $2, $3, $4)';
-         let values = [uuidv4(), username, hash, fullDate];
+         let query = 'INSERT INTO public.users(id, username, password, joindate, picturename, bio) VALUES ($1, $2, $3, $4, $5, $6)';
+         let values = [uuidv4(), username, hash, fullDate, "newbie", "I'm a newbie!"];
          client.query(query, values, (error, results) => {
            if (error) {
                throw error

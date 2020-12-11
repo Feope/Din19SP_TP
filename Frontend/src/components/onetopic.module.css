@@ -40,6 +40,7 @@
   margin-left: 50px;
   width: 400px;
   position: relative;
+  overflow-wrap: break-word;
 }
 
 .backForward {
@@ -75,11 +76,13 @@
   margin: 5px;
   background: whitesmoke;
 }
-.userid{
+.username{
   padding: 5px;
+  font-weight: bold;
 }
 .textComment{
   padding: 5px;
+  overflow-wrap: break-word;
 }
 .commentTime{
   padding: 5px;

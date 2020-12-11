@@ -158,3 +158,8 @@
   max-height: 93%;
   overflow-wrap: break-word;
 }
+
+.noPostComments {
+  text-align: center;
+  padding-top: 20px;
+}
