@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import styles from './PTC.module.css';
 
 export default function PictureTopicContainer(props) {
@@ -12,17 +12,13 @@ export default function PictureTopicContainer(props) {
     }
     return testing
   }
+
   function post(event) {
     event.preventDefault();
     props.addPost(
-      event.target['addPost'].value
+      event.target['postname'].value,
+      event.target['bio'].value
     );
-  }
-  function postcomment(event) {
-    event.preventDefault();
-    props.addPost(
-      event.target['postcomment'].value
-    )
   }
 
     return (
@@ -45,9 +41,9 @@ export default function PictureTopicContainer(props) {
         </div>
         <div>
           <form className={styles.addPost} onSubmit={post}>
-            <label htmlFor="addpost">Create new post</label>
-            <textarea type="text" name="addpost" classname={styles.commentinsert}/>
-            <textarea type="text" name="postcomment" classname={styles.commentinsert}/>
+            <label htmlFor="postname">Create new post</label>
+            <textarea type="text" name="postname" className={styles.commentinsert}/>
+            <textarea type="text" name="bio" className={styles.commentinsert}/>
             <input type="submit" value="Submit" className={styles.submitbutton}/> 
           </form>
         </div>

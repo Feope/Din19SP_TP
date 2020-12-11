@@ -230,7 +230,7 @@ app.post('/picture_posts', (req, res) => {
   var time = today.getHours() + ":" + today.getMinutes();
   var fullDate = date +' '+ time ;
 
-  client.query('INSERT INTO picture_posts(id, postname, picturename, ownerid, timedate, topicid, bio ) values ($1, $2, $3, $4, $5, $6, $7',
+  client.query('INSERT INTO picture_posts(id, postname, picturename, ownerid, timedate, topicid, bio) VALUES ($1, $2, $3, $4, $5, $6, $7)',
                                           [uuidv4(), req.body.postname, req.body.picturename, req.body.ownerid, fullDate, req.body.topicid, req.body.bio])
   .then(results => {
     res.sendStatus(201);

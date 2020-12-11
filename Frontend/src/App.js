@@ -291,8 +291,8 @@ export default class App extends Component {
     }
   };
 
-  addPost = (post) => {
-    if (post.length === 0) {
+  addPost = (postname, bio) => {
+    if (postname.length === 0) {
       alert("Some value is empty, please give all values")
     }
     else {
@@ -302,10 +302,10 @@ export default class App extends Component {
       }
       axios.post(urlAddress + 'picture_posts',
       {
-        postname: post,
+        postname: postname,
         ownerid: userID,
-        topicid: this.state.topics.topicid,
-        //bio: postcomment
+        topicid: this.state.chosenTopicName.id,
+        bio: bio
       })
       .then((response => {
         console.log("new post created");
