@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './onetopic.module.css';
+import {Link} from "react-router-dom";
 
 export default function Onetopic(props) {
 
@@ -52,6 +53,9 @@ export default function Onetopic(props) {
         </div>
         <div className={styles.textArea}>
           {props.postInfo.bio}
+          <Link to={`/users/un?un=${props.postUsername}`} onClick={()=>props.seeUserPage(props.postUsername)}>
+            <div className={styles.userName}>{props.postUsername}</div>
+          </Link>
         </div>
       </div>
         
