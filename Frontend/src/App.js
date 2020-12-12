@@ -120,7 +120,6 @@ export default class App extends Component {
 
   checkDarkmode = () => {
     var dark = this.getCookie("darkmode");
-    console.log(dark + "test");
     if(dark === "true"){
       document.body.style.backgroundColor = " rgb(56, 56, 61)"; 
     }
@@ -175,7 +174,6 @@ export default class App extends Component {
       else{
         this.setState({ page: "" });
       }
-      console.log( this.state.page );
     }
   }
 
@@ -216,7 +214,6 @@ export default class App extends Component {
       this.addUser(this.state.username, this.state.password);
     }
     
-    console.log( this.state.loggedIn );
   }
 
   changeToRegister = () =>{
@@ -239,7 +236,6 @@ export default class App extends Component {
     })
     .then((response) => {
       alert('Success');
-      console.log(response);
     })
     .catch((error) => {
       alert('Username already taken');
@@ -250,7 +246,6 @@ export default class App extends Component {
 
   deleteAccount = () => {
     let ids = this.state.loggedID;
-    console.log(ids);
 
     if(this.state.loggedID){
       axios.post(urlAddress + 'delete', {
@@ -275,6 +270,7 @@ export default class App extends Component {
   }
 
   topicChange = (newTopic, topicName) => {
+    this.setState({page: ""});
     axios.get(urlAddress + "picture_posts/" + newTopic)
     .then((response) => {
       this.setState({chosenTopicPosts: response.data, chosenTopicName:topicName})
@@ -297,7 +293,6 @@ export default class App extends Component {
           textcomment: comment
         })
       .then((response => {
-        console.log("new comment created");
         this.componentDidMount();
       }))
       .catch(error => {
@@ -314,7 +309,6 @@ export default class App extends Component {
         postid: this.state.postInfo.id
       })
     .then((response) => {
-      console.log("likes updated");
       this.componentDidMount();
   })
   .catch(error => {
@@ -330,7 +324,6 @@ thumbDown = () => {
       postid: this.state.postInfo.id
     })
   .then((response) => {
-    console.log("dislikes updated");
     this.componentDidMount();
 })
 .catch(error => {
