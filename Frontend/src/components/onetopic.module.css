@@ -39,6 +39,7 @@
 .textArea {
   margin-left: 50px;
   width: 400px;
+  position: relative;
 }
 
 .backForward {
@@ -100,4 +101,10 @@
   border: 1px solid deepskyblue;
   border-radius: 5%;
   margin-top: 5px;
+}
+.userName {
+  font-weight: bold;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }

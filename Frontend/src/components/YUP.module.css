@@ -72,7 +72,9 @@
 
 .commentPost {
   overflow: scroll;
-  max-height: 93%;
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: 91%;
   margin-top: 5px;
 }
 
@@ -149,4 +151,10 @@
 .postPicture {
   width: 50px;
   height: 50px;
+}
+
+.bioBox {
+  width: 100%;
+  max-height: 93%;
+  overflow-wrap: break-word;
 }
