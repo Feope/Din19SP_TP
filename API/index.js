@@ -223,7 +223,6 @@ app.get('/userPosts/:uid', (req, res) => {
   })
 })
 
-<<<<<<< HEAD
 //posting new post
 app.post('/picture_posts', (req, res) => {
   var today = new Date();
@@ -239,7 +238,6 @@ app.post('/picture_posts', (req, res) => {
   })
   .catch(error => res.sendStatus(500));                                        
 })
-=======
 //users changning their bio
 app.put('/changebio', (req, res) => {
   client.query('UPDATE users SET bio = $1 WHERE id = $2', [req.body.newbio, req.body.userid])
@@ -250,7 +248,6 @@ app.put('/changebio', (req, res) => {
   .catch(error => res.sendStatus(500));
 })
 
->>>>>>> main
 
 
 

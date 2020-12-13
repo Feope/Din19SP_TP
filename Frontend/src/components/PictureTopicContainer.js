@@ -3,6 +3,15 @@ import styles from './PTC.module.css';
 
 export default function PictureTopicContainer(props) {
 
+  var Pictures = [
+    { name: 'fort', image: 'fort.jpg' },
+    { name: 'fort2', image: 'fort2.jpg'},
+    { name: 'fort3', image: 'fort3.jpg'},
+    { name: 'mol', image: 'mol.jpg'},
+    { name: 'table', image: 'table.png'},
+    { name: 'tower', image: 'tower.jpg'}
+  ];
+
   function countComments(postid) {
     let testing = 0;
     for (let i = 0; i < props.allComments.length; i++) {
@@ -13,11 +22,12 @@ export default function PictureTopicContainer(props) {
     return testing
   }
 
-  function post(event) {
+  function post(event, postid) {
     event.preventDefault();
     props.addPost(
       event.target['postname'].value,
-      event.target['bio'].value
+      event.target['bio'].value,
+      postid,
     );
   }
 
@@ -44,6 +54,11 @@ export default function PictureTopicContainer(props) {
             <label htmlFor="postname">Create new post</label>
             <textarea type="text" name="postname" className={styles.commentinsert}/>
             <textarea type="text" name="bio" className={styles.commentinsert}/>
+            {Pictures.map( picture => (
+              <div key={picture.name}>
+                <div>{picture.image}</div>
+              </div>
+            ))}
             <input type="submit" value="Submit" className={styles.submitbutton}/> 
           </form>
         </div>
