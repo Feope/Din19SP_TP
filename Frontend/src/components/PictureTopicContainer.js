@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import styles from './PTC.module.css';
+import SubmitPicture from './SubmitPicture';
 
 export default function PictureTopicContainer(props) {
 
@@ -30,6 +31,10 @@ export default function PictureTopicContainer(props) {
             </div>
             </a>
           ))}
+        </div>
+        <div>
+          <button onClick={props.showModalPicture} className={styles.addpostbutton}>Add Post</button>
+          <SubmitPicture addPost={props.addPost} showSubmitPicture={props.showSubmitPicture}/>
         </div>
       </>
     )

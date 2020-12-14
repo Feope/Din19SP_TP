@@ -223,6 +223,21 @@ app.get('/userPosts/:uid', (req, res) => {
   })
 })
 
+//posting new post
+app.post('/picture_posts', (req, res) => {
+  var today = new Date();
+  var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes();
+  var fullDate = date +' '+ time ;
+
+  client.query('INSERT INTO picture_posts(id, postname, picturename, ownerid, timedate, topicid, bio) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+                                          [uuidv4(), req.body.postname, req.body.picturename, req.body.ownerid, fullDate, req.body.topicid, req.body.bio])
+  .then(results => {
+    res.sendStatus(201);
+    console.log("post added!");
+  })
+  .catch(error => res.sendStatus(500));                                        
+})
 //users changning their bio
 app.put('/changebio', (req, res) => {
   client.query('UPDATE users SET bio = $1 WHERE id = $2', [req.body.newbio, req.body.userid])
