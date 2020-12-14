@@ -22,7 +22,7 @@ export default function YourUserPage(props) {
           {props.userComments.map(comment => (
           <div key={comment.id} className={styles.commentPostBox}>
             <div><b>{findPostName(comment.postsid)}{postname}</b>,  <b>{comment.timedate} </b> </div>
-            <div>{comment.textcomment}</div>
+            <div className={styles.comment}>{comment.textcomment}</div>
             <div></div>
           </div>
           ))}
