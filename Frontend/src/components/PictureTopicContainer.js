@@ -1,16 +1,8 @@
 import React from 'react';
 import styles from './PTC.module.css';
+import SubmitPicture from './SubmitPicture';
 
 export default function PictureTopicContainer(props) {
-
-  var Pictures = [
-    { name: 'fort', image: 'fort.jpg' },
-    { name: 'fort2', image: 'fort2.jpg'},
-    { name: 'fort3', image: 'fort3.jpg'},
-    { name: 'mol', image: 'mol.jpg'},
-    { name: 'table', image: 'table.png'},
-    { name: 'tower', image: 'tower.jpg'}
-  ];
 
   function countComments(postid) {
     let testing = 0;
@@ -20,15 +12,6 @@ export default function PictureTopicContainer(props) {
       }
     }
     return testing
-  }
-
-  function post(event, postid) {
-    event.preventDefault();
-    props.addPost(
-      event.target['postname'].value,
-      event.target['bio'].value,
-      postid,
-    );
   }
 
     return (
@@ -50,17 +33,8 @@ export default function PictureTopicContainer(props) {
           ))}
         </div>
         <div>
-          <form className={styles.addPost} onSubmit={post}>
-            <label htmlFor="postname">Create new post</label>
-            <textarea type="text" name="postname" className={styles.commentinsert}/>
-            <textarea type="text" name="bio" className={styles.commentinsert}/>
-            {Pictures.map( picture => (
-              <div key={picture.name}>
-                <div>{picture.image}</div>
-              </div>
-            ))}
-            <input type="submit" value="Submit" className={styles.submitbutton}/> 
-          </form>
+          <button onClick={props.showModalPicture} className={styles.addpostbutton}>Add Post</button>
+          <SubmitPicture addPost={props.addPost} showSubmitPicture={props.showSubmitPicture}/>
         </div>
       </>
     )
