@@ -45,3 +45,9 @@
   margin: 5px;
   background: whitesmoke;
 }
+
+.theXbutton{
+  text-align: right;
+  padding: 5px;
+  cursor: pointer;
+}
