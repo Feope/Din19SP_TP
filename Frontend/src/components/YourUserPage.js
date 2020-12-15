@@ -15,29 +15,41 @@ export default function YourUserPage(props) {
   }
 
   if (comments === true) {
-    var output =                                     
+    if (props.userComments.length > 0)
+    {
+      var output =                                     
+        <div>
+          {props.userComments.map(comment => (
+          <div key={comment.id} className={styles.commentPostBox}>
+            <div><b>{findPostName(comment.postsid)}{postname}</b>,  <b>{comment.timedate} </b> </div>
+            <div className={styles.comment}>{comment.textcomment}</div>
+            <div></div>
+          </div>
+          ))}
+        </div>
+    }
+    else {
+      output = <div className={styles.noPostComments}> You don't have any comments yet :(</div>
+    }
+  }
+  else {
+    if (props.userPosts.length > 0)
+    {
+      output = 
       <div>
-        {props.userComments.map(comment => (
-        <div key={comment.id} className={styles.commentPostBox}>
-          <div><b>{findPostName(comment.postsid)}{postname}</b>,  <b>{comment.timedate} </b> </div>
-          <div>{comment.textcomment}</div>
+        {props.userPosts.map(post => (
+        <div key={post.id} className={styles.commentPostBox}>
+          <div><img className={styles.postPicture} alt="post" src={`/pictures/${post.picturename}`}></img></div>
+          <div><b>{post.postname}</b>, {post.timedate}  </div>
+          <div>Likes: {post.likes}, Dislikes: {post.dislikes}</div>
           <div></div>
         </div>
         ))}
       </div>
-  }
-  else {
-    output = 
-    <div>
-      {props.userPosts.map(post => (
-      <div key={post.id} className={styles.commentPostBox}>
-        <div><img className={styles.postPicture} alt="post" src={`/pictures/${post.picturename}`}></img></div>
-        <div><b>{post.postname}</b>, {post.timedate}  </div>
-        <div>Likes: {post.likes}, Dislikes: {post.dislikes}</div>
-        <div></div>
-      </div>
-      ))}
-    </div>
+    }
+    else {
+      output = <div className={styles.noPostComments}> You don't have any posts yet :(</div>
+    }
   }
 
   function commentsOrPosts(trueFalse) {

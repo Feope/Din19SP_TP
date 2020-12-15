@@ -31,6 +31,11 @@ export default function Onetopic(props) {
       backwardPostid = props.postIds[currentIndex-1];
     }
 
+    function userNameSearch(userid) {
+        var username = props.allUsers.find(element => element.id === userid)
+        return username.username;
+    }
+
   return (
     <div>
       <div className={styles.titleContainer}>
@@ -63,7 +68,7 @@ export default function Onetopic(props) {
         <div> 
           {props.comments.map( comment => (
             <div key={comment.id} className={styles.commentBox}>
-              <div className={styles.userid}> Anonymous {comment.userid} </div>
+              <div className={styles.username}> {userNameSearch(comment.userid)} </div>
               <div className={styles.textComment}> {comment.textcomment} </div> 
               <div className={styles.commentTime}> {comment.timedate} </div>
             </div>

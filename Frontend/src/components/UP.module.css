@@ -26,6 +26,12 @@
     margin: auto;
 }
 
+.actualImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
 .YourInfo{
     grid-column: 3;
     grid-row-start: 1;
@@ -65,4 +71,13 @@
     line-height: 60px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.bioBox {
+  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: auto;
+  width: 100%;
+  max-height: 45%;
+  overflow-wrap: break-word;
 }

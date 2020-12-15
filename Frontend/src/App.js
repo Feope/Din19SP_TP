@@ -66,12 +66,8 @@ export default class App extends Component {
     if (postid) {
       axios.get(urlAddress + "post/" + postid)
       .then((response) => {
-        for(let i=0; i < this.state.allUsers.length; i++) {
-          if (this.state.allUsers[i].id === response.data[0].ownerid) {
-            var username = this.state.allUsers[i].username; 
-          }
-        }
-        this.setState({postInfo: response.data[0], postUsername: username});
+        var username = this.state.allUsers.find(element => element.id === response.data[0].ownerid)
+        this.setState({postInfo: response.data[0], postUsername: username.username});
       }); 
     }
     axios.get( urlAddress + "comments/" + postid)
@@ -403,11 +399,10 @@ thumbDown = () => {
     })
   }
 
-  seeUserPage = (username) => {
-    for (let i=0; i < this.state.allUsers.length; i++) {
-      if(this.state.allUsers[i].username === username) {
-        this.setState({chosenUser: this.state.allUsers[i]})
-      }
+  seeUserPage = (name) => {
+    var user = this.state.allUsers.find(element => element.username === name);
+    if (user){
+      this.setState({chosenUser: user});
     }
   }
 
@@ -427,7 +422,8 @@ thumbDown = () => {
                                                           thumbUp={this.thumbUp}
                                                           thumbDown={this.thumbDown}
                                                           postUsername={this.state.postUsername}
-                                                          seeUserPage={this.seeUserPage}/>} />
+                                                          seeUserPage={this.seeUserPage}
+                                                          allUsers={this.state.allUsers}/>} />
           <Route path="/users/" component ={() => <UserPage chosenUser={this.state.chosenUser} seeUserPage={this.seeUserPage}/>} />
         </Switch>
       </>
