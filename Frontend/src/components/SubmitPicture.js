@@ -41,9 +41,9 @@ export default function SubmitPicture(props) {
         <form className={styles.addPost} onSubmit={post}>
           <label htmlFor="postname">Create new post</label> <br/>
           Name of your post
-          <textarea type="text" name="postname" className={styles.commentinsert}/>
+          <textarea type="text" name="postname" maxLength="60" className={styles.commentinsert}/>
           Info about your post
-          <textarea type="text" name="bio" className={styles.commentinsert}/>
+          <textarea type="text" name="bio" maxLength="250" className={styles.commentinsert}/>
           <div type="text" name="picturename" className={styles.pictureContainer}>
           {pictures.map(picture => (
             <div key={picture.name} name="picturename">
