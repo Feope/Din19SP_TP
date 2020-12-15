@@ -316,7 +316,6 @@ export default class App extends Component {
         picturename: picture
       })
       .then((response => {
-        console.log("new post created");
         this.componentDidMount();
       }))
       .catch(error => {

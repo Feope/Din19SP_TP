@@ -15,9 +15,7 @@ export default function SubmitPicture(props) {
     const [picture, setPicture] = useState("");
 
     function setnewPicture(name) {
-        console.log(name)
         setPicture(name)
-        console.log('here lies' + picture)
         }
 
         function post(event) {
@@ -27,7 +25,6 @@ export default function SubmitPicture(props) {
             event.target['bio'].value,
             picture
         );
-        console.log(picture)
     }
 
   if(!props.showSubmitPicture) {
