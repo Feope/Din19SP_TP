@@ -108,12 +108,7 @@ app.post('/user', (req, res) => {
     results.rows.forEach(element => 
       bcrypt.compare(password, element.password).then(bcryptResult =>{
         if(bcryptResult == true){
-          console.log("There was a match!!!!!");
-          console.log(element.id);
           res.json(element.id);
-        }
-        else{
-          console.log("There was not a match!!!!!");
         }
       })
       )
@@ -122,16 +117,12 @@ app.post('/user', (req, res) => {
 
 app.post('/delete', (req, res) => {
   let ids = req.body.ids.trim();
-  console.log(ids);
   client.query('DELETE FROM users WHERE id = $1', [ids]).then(results => {
-    console.log(results);
     res.status(201).send('Row deleted!')
   });
 });
 
 app.post('/register', (req, res) => {
-  console.log(req.body);
-
   var today = new Date();
   var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -142,7 +133,6 @@ app.post('/register', (req, res) => {
 
   client.query('SELECT * FROM users WHERE username = $1', [username]).then(results => {
     if(results.rows.length != 0){
-      console.log('user exists already');
       res.sendStatus(400);
     }
     else{
@@ -158,13 +148,11 @@ app.post('/register', (req, res) => {
            if (error) {
                throw error
            }
-           console.log(results);
            res.status(201).send('Row added')
          })
        });
      }
      else {
-       console.log("incorrect username or password, both must be strings and username more than 3 long and password more than 3 characters long");
        res.sendStatus(411);
      }
     }
@@ -183,7 +171,6 @@ app.post('/comment', (req, res) => {
                                     [uuidv4(), req.body.postsid, req.body.userid, req.body.textcomment, fullDate])
   .then(results => {
     res.sendStatus(201);
-    console.log("comment made!");
   })
   .catch(error => res.sendStatus(500));
 })
@@ -193,7 +180,6 @@ app.put('/like', (req, res) => {
   client.query('UPDATE picture_posts SET likes = $1, dislikes = $2 WHERE id = $3', [req.body.likes, req.body.dislikes, req.body.postid])
   .then(results => {
     res.sendStatus(200);
-    console.log("likes updated");
   })
   .catch(error => res.sendStatus(500));
 })
@@ -204,7 +190,6 @@ app.put('/userimage', (req, res) => {
   client.query('UPDATE users SET picturename = $1 WHERE id = $2', [pictureNumber, req.body.userid])
   .then(results => {
     res.sendStatus(200);
-    console.log("picture updated");
   })
   .catch(error => res.sendStatus(500));
 })
@@ -243,7 +228,6 @@ app.put('/changebio', (req, res) => {
   client.query('UPDATE users SET bio = $1 WHERE id = $2', [req.body.newbio, req.body.userid])
   .then(results => {
     res.sendStatus(200);
-    console.log("bio updated");
   })
   .catch(error => res.sendStatus(500));
 })

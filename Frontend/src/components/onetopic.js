@@ -14,7 +14,6 @@ export default function Onetopic(props) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const postid = urlParams.get('post');
-    console.log(postid);
     var forwardPostid = "";
     var backwardPostid = "";
     const currentIndex = props.postIds.indexOf(postid);

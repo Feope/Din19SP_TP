@@ -1,8 +1,8 @@
 .moduleContainer {
-    max-width: 1024px;
+    max-width: 70.25vw;
     background: white;
     border: 1px solid #ccc;
-    margin: 104px;
+    margin-top: 104px;
     border-radius: 3px;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@
     top: 0vh;
     padding-left: 50px;
     overflow: scroll;
-    height: 700px;
+    max-height: 80vh;
   }
 
 .pictures{

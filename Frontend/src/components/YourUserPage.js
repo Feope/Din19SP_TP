@@ -80,8 +80,6 @@ export default function YourUserPage(props) {
           <div className={styles.Pointer} onClick={props.showModalBio}>
             change bio <br/>
            </div> 
-          setting 3 <br/>
-          setting 4 <br/>
         </div>
         <div className={styles.YourMedals}>
           <div ><img alt="medal" style={{background: "white"}} className={styles.medals} src="/medals/medal1.png"/></div>
