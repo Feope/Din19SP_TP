@@ -7,11 +7,10 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 50%;
-    margin-top: -150px;
+    top: 0vh;
     padding-left: 50px;
     overflow: scroll;
-    height: 500px;
+    height: 700px;
   }
 
 .pictures{
