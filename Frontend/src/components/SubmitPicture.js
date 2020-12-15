@@ -49,7 +49,7 @@ export default function SubmitPicture(props) {
             </div>
           ))}
           </div>
-          <input type="submit" value="Submit" className={styles.submitbutton}/> 
+          <input type="submit" value="Submit" className={styles.submitbutton} onClick={props.showModalPicture}/> 
         </form>
       </div>
     )
