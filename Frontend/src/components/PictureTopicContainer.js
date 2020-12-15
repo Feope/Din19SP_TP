@@ -34,7 +34,7 @@ export default function PictureTopicContainer(props) {
         </div>
         <div>
           <button onClick={props.showModalPicture} className={styles.addpostbutton}>Add Post</button>
-          <SubmitPicture addPost={props.addPost} showSubmitPicture={props.showSubmitPicture}/>
+          <SubmitPicture showModalPicture={props.showModalPicture} addPost={props.addPost} showSubmitPicture={props.showSubmitPicture}/>
         </div>
       </>
     )
